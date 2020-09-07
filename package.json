@@ -1,0 +1,23 @@
+{
+  "name": "formio-adports",
+  "version": "1.0.0",
+  "description": "formio-customisation",
+  "main": "index.js",
+  "scripts": {
+    "test": "no test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/linoymalakkaran/publish_npm_package_formio.git"
+  },
+  "keywords": [
+    "formio-key"
+  ],
+  "author": "Linoy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/linoymalakkaran/publish_npm_package_formio/issues"
+  },
+  "homepage": "https://github.com/linoymalakkaran/publish_npm_package_formio#readme",
+  "dependencies": {}
+}
