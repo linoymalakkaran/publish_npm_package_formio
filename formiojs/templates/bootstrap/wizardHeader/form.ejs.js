@@ -1,7 +1,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true,
 });
-let ejs = require("../../../../ejs/ejs");
+let ejs = require("../../../node_modules/ejs/ejs");
 
 //added new function by linoy
 exports.default = function (ctx) {
