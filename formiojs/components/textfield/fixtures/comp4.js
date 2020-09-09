@@ -1,4 +1,10 @@
-export default {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = {
   'label': 'Text Field',
   'allowMultipleMasks': true,
   'spellcheck': true,
@@ -11,7 +17,7 @@ export default {
       'value': '555',
       'maskName': 'mask1'
     },
-    'submit': true,
+    'submit': true
   },
   'inputMasks': [{
     'label': 'mask1',
@@ -23,3 +29,4 @@ export default {
   'input': true,
   'disabled': true
 };
+exports.default = _default;

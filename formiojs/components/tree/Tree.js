@@ -1,437 +1,596 @@
-import _ from 'lodash';
-import Component from '../_classes/component/Component';
-import Components from '../Components';
-import NestedComponent from '../_classes/nested/NestedComponent';
-import Node from './Node';
-import NativePromise from 'native-promise-only';
+"use strict";
 
-export default class TreeComponent extends NestedComponent {
-  static schema(...extend) {
-    return NestedComponent.schema({
-      label: 'Tree',
-      key: 'tree',
-      type: 'tree',
-      clearOnHide: true,
-      input: true,
-      tree: true,
-      components: [],
-    }, ...extend);
-  }
+require("core-js/modules/es.symbol");
 
-  static get builderInfo() {
-    return {
-      title: 'Tree',
-      icon: 'indent',
-      group: 'data',
-      weight: 40,
-      schema: TreeComponent.schema(),
-    };
-  }
+require("core-js/modules/es.symbol.description");
 
-  constructor(...args) {
-    super(...args);
-    this.type = 'tree';
-  }
+require("core-js/modules/es.symbol.iterator");
 
-  get emptyValue() {
-    return {};
-  }
+require("core-js/modules/es.array.concat");
 
-  get viewComponents() {
-    if (!this.viewComponentsInstantiated) {
-      this.viewComponentsInstantiated = true;
-      this._viewComponents = this.createComponents({});
+require("core-js/modules/es.array.filter");
+
+require("core-js/modules/es.array.for-each");
+
+require("core-js/modules/es.array.iterator");
+
+require("core-js/modules/es.array.map");
+
+require("core-js/modules/es.array.reduce");
+
+require("core-js/modules/es.object.get-own-property-descriptor");
+
+require("core-js/modules/es.object.get-own-property-descriptors");
+
+require("core-js/modules/es.object.get-prototype-of");
+
+require("core-js/modules/es.object.keys");
+
+require("core-js/modules/es.object.to-string");
+
+require("core-js/modules/es.reflect.construct");
+
+require("core-js/modules/es.reflect.get");
+
+require("core-js/modules/es.regexp.to-string");
+
+require("core-js/modules/es.string.iterator");
+
+require("core-js/modules/web.dom-collections.for-each");
+
+require("core-js/modules/web.dom-collections.iterator");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _lodash = _interopRequireDefault(require("lodash"));
+
+var _Component = _interopRequireDefault(require("../_classes/component/Component"));
+
+var _Components = _interopRequireDefault(require("../Components"));
+
+var _NestedComponent2 = _interopRequireDefault(require("../_classes/nested/NestedComponent"));
+
+var _Node = _interopRequireDefault(require("./Node"));
+
+var _nativePromiseOnly = _interopRequireDefault(require("native-promise-only"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+var TreeComponent = /*#__PURE__*/function (_NestedComponent) {
+  _inherits(TreeComponent, _NestedComponent);
+
+  var _super = _createSuper(TreeComponent);
+
+  _createClass(TreeComponent, null, [{
+    key: "schema",
+    value: function schema() {
+      for (var _len = arguments.length, extend = new Array(_len), _key = 0; _key < _len; _key++) {
+        extend[_key] = arguments[_key];
+      }
+
+      return _NestedComponent2.default.schema.apply(_NestedComponent2.default, [{
+        label: 'Tree',
+        key: 'tree',
+        type: 'tree',
+        clearOnHide: true,
+        input: true,
+        tree: true,
+        components: []
+      }].concat(extend));
+    }
+  }, {
+    key: "builderInfo",
+    get: function get() {
+      return {
+        title: 'Tree',
+        icon: 'indent',
+        group: 'data',
+        weight: 40,
+        schema: TreeComponent.schema()
+      };
+    }
+  }]);
+
+  function TreeComponent() {
+    var _this;
+
+    _classCallCheck(this, TreeComponent);
+
+    for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      args[_key2] = arguments[_key2];
     }
 
-    return this._viewComponents;
+    _this = _super.call.apply(_super, [this].concat(args));
+    _this.type = 'tree';
+    return _this;
   }
 
-  init() {
-    if (this.builderMode) {
-      return super.init();
+  _createClass(TreeComponent, [{
+    key: "init",
+    value: function init() {
+      if (this.builderMode) {
+        return _get(_getPrototypeOf(TreeComponent.prototype), "init", this).call(this);
+      }
+
+      this.components = [];
+      this.componentOptions = _objectSpread(_objectSpread({}, this.options), {}, {
+        parent: this,
+        root: this.root || this
+      });
+      this.setRoot();
+      this.viewComponentsInstantiated = false;
+      this._viewComponents = [];
     }
+  }, {
+    key: "destroy",
+    value: function destroy() {
+      _get(_getPrototypeOf(TreeComponent.prototype), "destroy", this).call(this);
 
-    this.components = [];
-    this.componentOptions = {
-      ...this.options,
-      parent: this,
-      root: this.root || this,
-    };
-    this.setRoot();
-    this.viewComponentsInstantiated = false;
-    this._viewComponents = [];
-  }
-
-  destroy() {
-    super.destroy();
-
-    if (!this.builderMode) {
-      this.removeComponents(this._viewComponents);
+      if (!this.builderMode) {
+        this.removeComponents(this._viewComponents);
+      }
     }
-  }
+  }, {
+    key: "createComponents",
+    value: function createComponents(data, node) {
+      var _this2 = this;
 
-  createComponents(data, node) {
-    const components = this.componentComponents.map(
-      (component) => Components.create(component, this.componentOptions, data),
-    );
+      var components = this.componentComponents.map(function (component) {
+        return _Components.default.create(component, _this2.componentOptions, data);
+      });
 
-    if (node) {
-      this.checkNode(this.data, node);
+      if (node) {
+        this.checkNode(this.data, node);
+      }
+
+      return components;
     }
-
-    return components;
-  }
-
-  removeComponents(components) {
-    return components.map((component) => component.destroy());
-  }
-
-  render() {
-    if (this.builderMode) {
-      return super.render();
-    }
-
-    return super.render(this.renderTree(this.treeRoot));
-  }
-
-  renderTree(node = {}, odd = true) {
-    const childNodes = (node.hasChildren && !node.collapsed)
-      ? this.renderChildNodes(node.children, !odd)
-      : [];
-    const content = node.changing
-      ? this.renderEdit(node)
-      : this.renderView(node);
-
-    return this.renderTemplate('tree', {
-      odd,
-      childNodes,
-      content,
-      node,
-    });
-  }
-
-  renderChildNodes(nodes = [], odd) {
-    return nodes.map((node) => this.renderTree(node, odd));
-  }
-
-  renderEdit(node = {}) {
-    return this.renderTemplate('treeEdit', {
-      children: this.renderComponents(node.components),
-      node,
-    });
-  }
-
-  renderView(node = {}) {
-    return this.renderTemplate('treeView', {
-      values: this.viewComponents.map((component) => {
-        component.data = node.data;
-        component.checkComponentConditions(node.data);
-        return component.getView(component.dataValue);
-      }),
-      nodeData: node.data,
-      node,
-    });
-  }
-
-  attach(element) {
-    if (this.builderMode) {
-      return super.attach(element);
-    }
-
-    this.loadRefs(element, {
-      root: 'single',
-    });
-
-    return NativePromise.all([
-      super.attach(element),
-      this.attachNode(this.refs.root, this.treeRoot),
-    ]);
-  }
-
-  attachNode(element, node) {
-    if (!element) {
-      return NativePromise.resolve();
-    }
-
-    let componentsPromise = NativePromise.resolve();
-    let childrenPromise = NativePromise.resolve();
-
-    node.refs = _.reduce(
-      element.children,
-      (refs, child) => (
-        child.hasAttribute('ref')
-          ? {
-            ...refs,
-            [child.getAttribute('ref')]: child,
-          }
-          : refs
-      ),
-      {},
-    );
-
-    if (node.refs.content) {
-      this.attachActions(node);
-      componentsPromise = this.attachComponents(node);
-    }
-
-    if (node.refs.childNodes) {
-      childrenPromise = this.attachChildren(node);
-    }
-
-    return NativePromise.all([
-      componentsPromise,
-      childrenPromise,
-    ]);
-  }
-
-  attachActions(node) {
-    this.loadRefs.call(node, node.refs.content, {
-      addChild: 'single',
-      cancelNode: 'single',
-      editNode: 'single',
-      removeNode: 'single',
-      revertNode: 'single',
-      saveNode: 'single',
-      toggleNode: 'single',
-    });
-
-    if (node.refs.addChild) {
-      this.addEventListener(node.refs.addChild, 'click', () => {
-        this.addChild(node);
+  }, {
+    key: "removeComponents",
+    value: function removeComponents(components) {
+      return components.map(function (component) {
+        return component.destroy();
       });
     }
+  }, {
+    key: "render",
+    value: function render() {
+      if (this.builderMode) {
+        return _get(_getPrototypeOf(TreeComponent.prototype), "render", this).call(this);
+      }
 
-    if (node.refs.cancelNode) {
-      this.addEventListener(node.refs.cancelNode, 'click', () => {
-        this.cancelNode(node);
+      return _get(_getPrototypeOf(TreeComponent.prototype), "render", this).call(this, this.renderTree(this.treeRoot));
+    }
+  }, {
+    key: "renderTree",
+    value: function renderTree() {
+      var node = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var odd = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+      var childNodes = node.hasChildren && !node.collapsed ? this.renderChildNodes(node.children, !odd) : [];
+      var content = node.changing ? this.renderEdit(node) : this.renderView(node);
+      return this.renderTemplate('tree', {
+        odd: odd,
+        childNodes: childNodes,
+        content: content,
+        node: node
       });
     }
+  }, {
+    key: "renderChildNodes",
+    value: function renderChildNodes() {
+      var _this3 = this;
 
-    if (node.refs.editNode) {
-      this.addEventListener(node.refs.editNode, 'click', () => {
-        this.editNode(node);
+      var nodes = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+      var odd = arguments.length > 1 ? arguments[1] : undefined;
+      return nodes.map(function (node) {
+        return _this3.renderTree(node, odd);
       });
     }
-
-    if (node.refs.removeNode) {
-      this.addEventListener(node.refs.removeNode, 'click', () => {
-        this.removeNode(node);
+  }, {
+    key: "renderEdit",
+    value: function renderEdit() {
+      var node = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      return this.renderTemplate('treeEdit', {
+        children: this.renderComponents(node.components),
+        node: node
       });
     }
-
-    if (node.refs.revertNode) {
-      this.addEventListener(node.refs.revertNode, 'click', () => {
-        this.revertNode(node);
+  }, {
+    key: "renderView",
+    value: function renderView() {
+      var node = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      return this.renderTemplate('treeView', {
+        values: this.viewComponents.map(function (component) {
+          component.data = node.data;
+          component.checkComponentConditions(node.data);
+          return component.getView(component.dataValue);
+        }),
+        nodeData: node.data,
+        node: node
       });
     }
+  }, {
+    key: "attach",
+    value: function attach(element) {
+      if (this.builderMode) {
+        return _get(_getPrototypeOf(TreeComponent.prototype), "attach", this).call(this, element);
+      }
 
-    if (node.refs.saveNode) {
-      this.addEventListener(node.refs.saveNode, 'click', () => {
-        this.saveNode(node);
+      this.loadRefs(element, {
+        root: 'single'
+      });
+      return _nativePromiseOnly.default.all([_get(_getPrototypeOf(TreeComponent.prototype), "attach", this).call(this, element), this.attachNode(this.refs.root, this.treeRoot)]);
+    }
+  }, {
+    key: "attachNode",
+    value: function attachNode(element, node) {
+      if (!element) {
+        return _nativePromiseOnly.default.resolve();
+      }
+
+      var componentsPromise = _nativePromiseOnly.default.resolve();
+
+      var childrenPromise = _nativePromiseOnly.default.resolve();
+
+      node.refs = _lodash.default.reduce(element.children, function (refs, child) {
+        return child.hasAttribute('ref') ? _objectSpread(_objectSpread({}, refs), {}, _defineProperty({}, child.getAttribute('ref'), child)) : refs;
+      }, {});
+
+      if (node.refs.content) {
+        this.attachActions(node);
+        componentsPromise = this.attachComponents(node);
+      }
+
+      if (node.refs.childNodes) {
+        childrenPromise = this.attachChildren(node);
+      }
+
+      return _nativePromiseOnly.default.all([componentsPromise, childrenPromise]);
+    }
+  }, {
+    key: "attachActions",
+    value: function attachActions(node) {
+      var _this4 = this;
+
+      this.loadRefs.call(node, node.refs.content, {
+        addChild: 'single',
+        cancelNode: 'single',
+        editNode: 'single',
+        removeNode: 'single',
+        revertNode: 'single',
+        saveNode: 'single',
+        toggleNode: 'single'
+      });
+
+      if (node.refs.addChild) {
+        this.addEventListener(node.refs.addChild, 'click', function () {
+          _this4.addChild(node);
+        });
+      }
+
+      if (node.refs.cancelNode) {
+        this.addEventListener(node.refs.cancelNode, 'click', function () {
+          _this4.cancelNode(node);
+        });
+      }
+
+      if (node.refs.editNode) {
+        this.addEventListener(node.refs.editNode, 'click', function () {
+          _this4.editNode(node);
+        });
+      }
+
+      if (node.refs.removeNode) {
+        this.addEventListener(node.refs.removeNode, 'click', function () {
+          _this4.removeNode(node);
+        });
+      }
+
+      if (node.refs.revertNode) {
+        this.addEventListener(node.refs.revertNode, 'click', function () {
+          _this4.revertNode(node);
+        });
+      }
+
+      if (node.refs.saveNode) {
+        this.addEventListener(node.refs.saveNode, 'click', function () {
+          _this4.saveNode(node);
+        });
+      }
+
+      if (node.refs.toggleNode) {
+        this.addEventListener(node.refs.toggleNode, 'click', function () {
+          _this4.toggleNode(node);
+        });
+      }
+    }
+  }, {
+    key: "attachComponents",
+    value: function attachComponents(node) {
+      if (this.builderMode) {
+        var _get2;
+
+        for (var _len3 = arguments.length, args = new Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
+          args[_key3 - 1] = arguments[_key3];
+        }
+
+        return (_get2 = _get(_getPrototypeOf(TreeComponent.prototype), "attachComponents", this)).call.apply(_get2, [this, node].concat(args));
+      }
+
+      this.loadRefs.call(node, node.refs.content, {
+        nodeEdit: 'single'
+      });
+      return node.refs.nodeEdit ? _get(_getPrototypeOf(TreeComponent.prototype), "attachComponents", this).call(this, node.refs.nodeEdit, node.components) : _nativePromiseOnly.default.resolve();
+    }
+  }, {
+    key: "attachChildren",
+    value: function attachChildren(node) {
+      var _this5 = this;
+
+      var childElements = node.refs.childNodes.children;
+      return _nativePromiseOnly.default.all(_lodash.default.map(childElements, function (childElement, index) {
+        return _this5.attachNode(childElement, node.children[index]);
+      }));
+    }
+  }, {
+    key: "setValue",
+    value: function setValue(value) {
+      var flags = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var changed = this.updateValue(value, flags);
+      this.setRoot();
+      return changed;
+    }
+  }, {
+    key: "addChild",
+    value: function addChild(parent) {
+      var _this6 = this;
+
+      if (this.options.readOnly || parent.new) {
+        return;
+      }
+
+      this.hook('tree.addChild', {
+        parent: parent,
+        component: this
+      }, function () {
+        var child = parent.addChild();
+
+        _this6.redraw();
+
+        return child;
       });
     }
+  }, {
+    key: "cancelNode",
+    value: function cancelNode(node) {
+      var _this7 = this;
 
-    if (node.refs.toggleNode) {
-      this.addEventListener(node.refs.toggleNode, 'click', () => {
-        this.toggleNode(node);
+      if (this.options.readOnly) {
+        return;
+      }
+
+      this.hook('tree.cancelNode', {
+        node: node,
+        component: this
+      }, function () {
+        if (node.isRoot) {
+          _this7.removeRoot();
+        } else {
+          node.cancel();
+
+          _this7.redraw();
+        }
+
+        return node;
       });
     }
-  }
+  }, {
+    key: "editNode",
+    value: function editNode(node) {
+      var _this8 = this;
 
-  attachComponents(node, ...args) {
-    if (this.builderMode) {
-      return super.attachComponents.call(this, node, ...args);
+      if (this.options.readOnly || node.new) {
+        return;
+      }
+
+      this.hook('tree.editNode', {
+        node: node,
+        component: this
+      }, function () {
+        node.edit();
+
+        _this8.redraw();
+
+        return node;
+      });
     }
+  }, {
+    key: "removeNode",
+    value: function removeNode(node) {
+      var _this9 = this;
 
-    this.loadRefs.call(node, node.refs.content, {
-      nodeEdit: 'single',
-    });
+      if (this.options.readOnly || node.new) {
+        return;
+      }
 
-    return node.refs.nodeEdit
-      ? super.attachComponents(node.refs.nodeEdit, node.components)
-      : NativePromise.resolve();
-  }
+      this.hook('tree.removeNode', {
+        node: node,
+        component: this
+      }, function () {
+        if (node.isRoot) {
+          _this9.removeRoot();
+        } else {
+          node.remove();
 
-  attachChildren(node) {
-    const childElements = node.refs.childNodes.children;
+          _this9.updateTree();
+        }
 
-    return NativePromise.all(
-      _.map(
-        childElements,
-        (childElement, index) => this.attachNode(childElement, node.children[index]),
-      ),
-    );
-  }
-
-  setValue(value, flags = {}) {
-    const changed = this.updateValue(value, flags);
-    this.setRoot();
-    return changed;
-  }
-
-  addChild(parent) {
-    if (this.options.readOnly || parent.new) {
-      return;
+        return node;
+      });
     }
+  }, {
+    key: "revertNode",
+    value: function revertNode(node) {
+      var _this10 = this;
 
-    this.hook('tree.addChild', {
-      parent,
-      component: this,
-    }, () => {
-      const child = parent.addChild();
+      if (this.options.readOnly || !node.revertAvailable) {
+        return;
+      }
+
+      this.hook('tree.revertNode', {
+        node: node,
+        component: this
+      }, function () {
+        node.revert();
+
+        _this10.updateTree();
+
+        return node;
+      });
+    }
+  }, {
+    key: "saveNode",
+    value: function saveNode(node) {
+      var _this11 = this;
+
+      if (this.options.readOnly) {
+        return;
+      }
+
+      this.hook('tree.saveNode', {
+        node: node,
+        component: this
+      }, function () {
+        node.save();
+
+        _this11.updateTree();
+
+        return node;
+      });
+    }
+  }, {
+    key: "toggleNode",
+    value: function toggleNode(node) {
+      var _this12 = this;
+
+      this.hook('tree.toggleNode', {
+        node: node,
+        component: this
+      }, function () {
+        node.collapsed = !node.collapsed;
+
+        _this12.redraw();
+
+        return node;
+      });
+    }
+  }, {
+    key: "removeRoot",
+    value: function removeRoot() {
+      if (this.options.readOnly) {
+        return;
+      }
+
+      this.dataValue = this.defaultValue;
+      this.setRoot();
       this.redraw();
-
-      return child;
-    });
-  }
-
-  cancelNode(node) {
-    if (this.options.readOnly) {
-      return;
     }
-
-    this.hook('tree.cancelNode', {
-      node,
-      component: this,
-    }, () => {
-      if (node.isRoot) {
-        this.removeRoot();
-      }
-      else {
-        node.cancel();
-        this.redraw();
-      }
-
-      return node;
-    });
-  }
-
-  editNode(node) {
-    if (this.options.readOnly || node.new) {
-      return;
-    }
-
-    this.hook('tree.editNode', {
-      node,
-      component: this,
-    }, () => {
-      node.edit();
+  }, {
+    key: "setRoot",
+    value: function setRoot() {
+      var value = this.dataValue;
+      this.treeRoot = new _Node.default(null, value, {
+        isNew: !value.data,
+        createComponents: this.createComponents.bind(this),
+        checkNode: this.checkNode.bind(this, this.data),
+        removeComponents: this.removeComponents
+      });
+      this.hook('tree.setRoot', {
+        root: this.treeRoot,
+        component: this
+      });
       this.redraw();
-
-      return node;
-    });
-  }
-
-  removeNode(node) {
-    if (this.options.readOnly || node.new) {
-      return;
     }
-
-    this.hook('tree.removeNode', {
-      node,
-      component: this,
-    }, () => {
-      if (node.isRoot) {
-        this.removeRoot();
-      }
-      else {
-        node.remove();
-        this.updateTree();
-      }
-
-      return node;
-    });
-  }
-
-  revertNode(node) {
-    if (this.options.readOnly || !node.revertAvailable) {
-      return;
+  }, {
+    key: "getValue",
+    value: function getValue() {
+      return this.dataValue;
     }
-
-    this.hook('tree.revertNode', {
-      node,
-      component: this,
-    }, () => {
-      node.revert();
-      this.updateTree();
-
-      return node;
-    });
-  }
-
-  saveNode(node) {
-    if (this.options.readOnly) {
-      return;
-    }
-
-    this.hook('tree.saveNode', {
-      node,
-      component: this,
-    }, () => {
-      node.save();
-      this.updateTree();
-
-      return node;
-    });
-  }
-
-  toggleNode(node) {
-    this.hook('tree.toggleNode', {
-      node,
-      component: this,
-    }, () => {
-      node.collapsed = !node.collapsed;
+  }, {
+    key: "updateTree",
+    value: function updateTree() {
+      this.updateValue(this.treeRoot.value);
       this.redraw();
-
-      return node;
-    });
-  }
-
-  removeRoot() {
-    if (this.options.readOnly) {
-      return;
     }
+  }, {
+    key: "checkData",
+    value: function checkData(data, flags, row) {
+      return this.checkNode(data, this.treeRoot, flags, row);
+    }
+  }, {
+    key: "checkNode",
+    value: function checkNode(data, node, flags, row) {
+      var _this13 = this;
 
-    this.dataValue = this.defaultValue;
-    this.setRoot();
-    this.redraw();
-  }
+      return node.children.reduce(function (result, child) {
+        return _this13.checkNode(data, child, flags, row) && result;
+      }, _get(_getPrototypeOf(TreeComponent.prototype), "checkData", this).call(this, data, flags, node.data, node.components));
+    }
+  }, {
+    key: "emptyValue",
+    get: function get() {
+      return {};
+    }
+  }, {
+    key: "viewComponents",
+    get: function get() {
+      if (!this.viewComponentsInstantiated) {
+        this.viewComponentsInstantiated = true;
+        this._viewComponents = this.createComponents({});
+      }
 
-  setRoot() {
-    const value = this.dataValue;
-    this.treeRoot = new Node(null, value, {
-      isNew: !value.data,
-      createComponents: this.createComponents.bind(this),
-      checkNode: this.checkNode.bind(this, this.data),
-      removeComponents: this.removeComponents,
-    });
-    this.hook('tree.setRoot', {
-      root: this.treeRoot,
-      component: this,
-    });
-    this.redraw();
-  }
+      return this._viewComponents;
+    }
+  }]);
 
-  getValue() {
-    return this.dataValue;
-  }
+  return TreeComponent;
+}(_NestedComponent2.default);
 
-  updateTree() {
-    this.updateValue(this.treeRoot.value);
-    this.redraw();
-  }
-
-  checkData(data, flags, row) {
-    return this.checkNode(data, this.treeRoot, flags, row);
-  }
-
-  checkNode(data, node, flags, row) {
-    return node.children.reduce(
-      (result, child) => this.checkNode(data, child, flags, row) && result,
-      super.checkData(data, flags, node.data, node.components),
-    );
-  }
-}
-
-TreeComponent.prototype.hasChanged = Component.prototype.hasChanged;
-TreeComponent.prototype.updateValue = Component.prototype.updateValue;
+exports.default = TreeComponent;
+TreeComponent.prototype.hasChanged = _Component.default.prototype.hasChanged;
+TreeComponent.prototype.updateValue = _Component.default.prototype.updateValue;

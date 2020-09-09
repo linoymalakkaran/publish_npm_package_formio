@@ -1,4 +1,10 @@
-export default {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = {
   'tags': [],
   'type': 'textarea',
   'validate': {
@@ -25,3 +31,4 @@ export default {
   'spellcheck': true,
   'input': true
 };
+exports.default = _default;

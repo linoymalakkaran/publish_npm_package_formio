@@ -1,17 +1,91 @@
-import get from 'lodash/get';
-import set from 'lodash/set';
-import has from 'lodash/has';
-import clone from 'lodash/clone';
-import forOwn from 'lodash/forOwn';
-import isString from 'lodash/isString';
-import isNaN from 'lodash/isNaN';
-import isNil from 'lodash/isNil';
-import isPlainObject from 'lodash/isPlainObject';
-import round from 'lodash/round';
-import chunk from 'lodash/chunk';
-import pad from 'lodash/pad';
-import { compare, applyPatch } from 'fast-json-patch';
-import _ from 'lodash';
+"use strict";
+
+require("core-js/modules/es.array.concat");
+
+require("core-js/modules/es.array.for-each");
+
+require("core-js/modules/es.array.from");
+
+require("core-js/modules/es.array.includes");
+
+require("core-js/modules/es.array.index-of");
+
+require("core-js/modules/es.array.iterator");
+
+require("core-js/modules/es.array.join");
+
+require("core-js/modules/es.array.map");
+
+require("core-js/modules/es.array.slice");
+
+require("core-js/modules/es.array.splice");
+
+require("core-js/modules/es.object.to-string");
+
+require("core-js/modules/es.regexp.exec");
+
+require("core-js/modules/es.regexp.to-string");
+
+require("core-js/modules/es.string.iterator");
+
+require("core-js/modules/es.string.replace");
+
+require("core-js/modules/es.string.split");
+
+require("core-js/modules/web.dom-collections.for-each");
+
+require("core-js/modules/web.dom-collections.iterator");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.isLayoutComponent = isLayoutComponent;
+exports.eachComponent = eachComponent;
+exports.matchComponent = matchComponent;
+exports.getComponent = getComponent;
+exports.searchComponents = searchComponents;
+exports.findComponents = findComponents;
+exports.findComponent = findComponent;
+exports.removeComponent = removeComponent;
+exports.generateFormChange = generateFormChange;
+exports.applyFormChanges = applyFormChanges;
+exports.flattenComponents = flattenComponents;
+exports.hasCondition = hasCondition;
+exports.parseFloatExt = parseFloatExt;
+exports.formatAsCurrency = formatAsCurrency;
+exports.escapeRegExCharacters = escapeRegExCharacters;
+exports.getValue = getValue;
+exports.getStrings = getStrings;
+
+var _get = _interopRequireDefault(require("lodash/get"));
+
+var _set = _interopRequireDefault(require("lodash/set"));
+
+var _has = _interopRequireDefault(require("lodash/has"));
+
+var _clone = _interopRequireDefault(require("lodash/clone"));
+
+var _forOwn = _interopRequireDefault(require("lodash/forOwn"));
+
+var _isString = _interopRequireDefault(require("lodash/isString"));
+
+var _isNaN = _interopRequireDefault(require("lodash/isNaN"));
+
+var _isNil = _interopRequireDefault(require("lodash/isNil"));
+
+var _isPlainObject = _interopRequireDefault(require("lodash/isPlainObject"));
+
+var _round = _interopRequireDefault(require("lodash/round"));
+
+var _chunk = _interopRequireDefault(require("lodash/chunk"));
+
+var _pad = _interopRequireDefault(require("lodash/pad"));
+
+var _fastJsonPatch = require("fast-json-patch");
+
+var _lodash = _interopRequireDefault(require("lodash"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Determine if a component is a layout component or not.
@@ -22,14 +96,9 @@ import _ from 'lodash';
  * @returns {Boolean}
  *   Whether or not the component is a layout component.
  */
-export function isLayoutComponent(component) {
-  return Boolean(
-    (component.columns && Array.isArray(component.columns)) ||
-    (component.rows && Array.isArray(component.rows)) ||
-    (component.components && Array.isArray(component.components))
-  );
+function isLayoutComponent(component) {
+  return Boolean(component.columns && Array.isArray(component.columns) || component.rows && Array.isArray(component.rows) || component.components && Array.isArray(component.components));
 }
-
 /**
  * Iterate through each component within a form.
  *
@@ -44,78 +113,68 @@ export function isLayoutComponent(component) {
  * @param {Object} parent
  *   The parent object.
  */
-export function eachComponent(components, fn, includeAll, path, parent) {
+
+
+function eachComponent(components, fn, includeAll, path, parent) {
   if (!components) return;
   path = path || '';
-  components.forEach((component) => {
+  components.forEach(function (component) {
     if (!component) {
       return;
     }
-    const hasColumns = component.columns && Array.isArray(component.columns);
-    const hasRows = component.rows && Array.isArray(component.rows);
-    const hasComps = component.components && Array.isArray(component.components);
-    let noRecurse = false;
-    const newPath = component.key ? (path ? (`${path}.${component.key}`) : component.key) : '';
 
-    // Keep track of parent references.
+    var hasColumns = component.columns && Array.isArray(component.columns);
+    var hasRows = component.rows && Array.isArray(component.rows);
+    var hasComps = component.components && Array.isArray(component.components);
+    var noRecurse = false;
+    var newPath = component.key ? path ? "".concat(path, ".").concat(component.key) : component.key : ''; // Keep track of parent references.
+
     if (parent) {
       // Ensure we don't create infinite JSON structures.
-      component.parent = clone(parent);
+      component.parent = (0, _clone.default)(parent);
       delete component.parent.components;
       delete component.parent.componentMap;
       delete component.parent.columns;
       delete component.parent.rows;
-    }
+    } // there's no need to add other layout components here because we expect that those would either have columns, rows or components
 
-    // there's no need to add other layout components here because we expect that those would either have columns, rows or components
-    const layoutTypes = ['htmlelement', 'content'];
-    const isLayoutComponent = hasColumns || hasRows || hasComps || layoutTypes.indexOf(component.type) > -1;
+
+    var layoutTypes = ['htmlelement', 'content'];
+    var isLayoutComponent = hasColumns || hasRows || hasComps || layoutTypes.indexOf(component.type) > -1;
+
     if (includeAll || component.tree || !isLayoutComponent) {
-      noRecurse = fn(component, newPath, components);
+      noRecurse = fn(component, newPath);
     }
 
-    const subPath = () => {
-      if (
-        component.key &&
-        !['panel', 'table', 'well', 'columns', 'fieldset', 'tabs', 'form'].includes(component.type) &&
-        (
-          ['datagrid', 'container', 'editgrid', 'address'].includes(component.type) ||
-          component.tree
-        )
-      ) {
+    var subPath = function subPath() {
+      if (component.key && !['panel', 'table', 'well', 'columns', 'fieldset', 'tabs', 'form'].includes(component.type) && (['datagrid', 'container', 'editgrid', 'address'].includes(component.type) || component.tree)) {
         return newPath;
+      } else if (component.key && component.type === 'form') {
+        return "".concat(newPath, ".data");
       }
-      else if (
-        component.key &&
-        component.type === 'form'
-      ) {
-        return `${newPath}.data`;
-      }
+
       return path;
     };
 
     if (!noRecurse) {
       if (hasColumns) {
-        component.columns.forEach((column) =>
-          eachComponent(column.components, fn, includeAll, subPath(), parent ? component : null));
-      }
-
-      else if (hasRows) {
-        component.rows.forEach((row) => {
+        component.columns.forEach(function (column) {
+          return eachComponent(column.components, fn, includeAll, subPath(), parent ? component : null);
+        });
+      } else if (hasRows) {
+        component.rows.forEach(function (row) {
           if (Array.isArray(row)) {
-            row.forEach((column) =>
-              eachComponent(column.components, fn, includeAll, subPath(), parent ? component : null));
+            row.forEach(function (column) {
+              return eachComponent(column.components, fn, includeAll, subPath(), parent ? component : null);
+            });
           }
         });
-      }
-
-      else if (hasComps) {
+      } else if (hasComps) {
         eachComponent(component.components, fn, includeAll, subPath(), parent ? component : null);
       }
     }
   });
 }
-
 /**
  * Matches if a component matches the query.
  *
@@ -123,14 +182,16 @@ export function eachComponent(components, fn, includeAll, path, parent) {
  * @param query
  * @return {boolean}
  */
-export function matchComponent(component, query) {
-  if (isString(query)) {
-    return (component.key === query) || (component.path === query);
-  }
-  else {
-    let matches = false;
-    forOwn(query, (value, key) => {
-      matches = (get(component, key) === value);
+
+
+function matchComponent(component, query) {
+  if ((0, _isString.default)(query)) {
+    return component.key === query || component.path === query;
+  } else {
+    var matches = false;
+    (0, _forOwn.default)(query, function (value, key) {
+      matches = (0, _get.default)(component, key) === value;
+
       if (!matches) {
         return false;
       }
@@ -138,7 +199,6 @@ export function matchComponent(component, query) {
     return matches;
   }
 }
-
 /**
  * Get a component by its key
  *
@@ -150,17 +210,18 @@ export function matchComponent(component, query) {
  * @returns {Object}
  *   The component that matches the given key, or undefined if not found.
  */
-export function getComponent(components, key, includeAll) {
-  let result;
-  eachComponent(components, (component, path) => {
-    if ((path === key) || (component.path === key)) {
+
+
+function getComponent(components, key, includeAll) {
+  var result;
+  eachComponent(components, function (component, path) {
+    if (path === key || component.path === key) {
       result = component;
       return true;
     }
   }, includeAll);
   return result;
 }
-
 /**
  * Finds a component provided a query of properties of that component.
  *
@@ -168,16 +229,17 @@ export function getComponent(components, key, includeAll) {
  * @param query
  * @return {*}
  */
-export function searchComponents(components, query) {
-  const results = [];
-  eachComponent(components, (component) => {
+
+
+function searchComponents(components, query) {
+  var results = [];
+  eachComponent(components, function (component) {
     if (matchComponent(component, query)) {
       results.push(component);
     }
   }, true);
   return results;
 }
-
 /**
  * Deprecated version of findComponents. Renamed to searchComponents.
  *
@@ -185,11 +247,12 @@ export function searchComponents(components, query) {
  * @param query
  * @returns {*}
  */
-export function findComponents(components, query) {
+
+
+function findComponents(components, query) {
   console.warn('formio.js/utils findComponents is deprecated. Use searchComponents instead.');
   return searchComponents(components, query);
 }
-
 /**
  * This function will find a component in a form and return the component AND THE PATH to the component in the form.
  * Path to the component is stored as an array of nested components and their indexes.The Path is being filled recursively
@@ -202,7 +265,9 @@ export function findComponents(components, query) {
  * @param path
  * @returns {*}
  */
-export function findComponent(components, key, path, fn) {
+
+
+function findComponent(components, key, path, fn) {
   if (!components) return;
   path = path || [];
 
@@ -210,15 +275,15 @@ export function findComponent(components, key, path, fn) {
     return fn(components);
   }
 
-  components.forEach(function(component, index) {
-    var newPath = path.slice();
-    // Add an index of the component it iterates through in nested structure
+  components.forEach(function (component, index) {
+    var newPath = path.slice(); // Add an index of the component it iterates through in nested structure
+
     newPath.push(index);
     if (!component) return;
 
     if (component.hasOwnProperty('columns') && Array.isArray(component.columns)) {
       newPath.push('columns');
-      component.columns.forEach(function(column, index) {
+      component.columns.forEach(function (column, index) {
         var colPath = newPath.slice();
         colPath.push(index);
         colPath.push('components');
@@ -228,10 +293,10 @@ export function findComponent(components, key, path, fn) {
 
     if (component.hasOwnProperty('rows') && Array.isArray(component.rows)) {
       newPath.push('rows');
-      component.rows.forEach(function(row, index) {
+      component.rows.forEach(function (row, index) {
         var rowPath = newPath.slice();
         rowPath.push(index);
-        row.forEach(function(column, index) {
+        row.forEach(function (column, index) {
           var colPath = rowPath.slice();
           colPath.push(index);
           colPath.push('components');
@@ -247,55 +312,64 @@ export function findComponent(components, key, path, fn) {
 
     if (component.key === key) {
       //Final callback if the component is found
-      fn(component, newPath, components);
+      fn(component, newPath);
     }
   });
 }
-
 /**
  * Remove a component by path.
  *
  * @param components
  * @param path
  */
-export function removeComponent(components, path) {
+
+
+function removeComponent(components, path) {
   // Using _.unset() leave a null value. Use Array splice instead.
   var index = path.pop();
+
   if (path.length !== 0) {
-    components = get(components, path);
+    components = (0, _get.default)(components, path);
   }
+
   components.splice(index, 1);
 }
 
-export function generateFormChange(type, data) {
-  let change;
+function generateFormChange(type, data) {
+  var change;
+
   switch (type) {
     case 'add':
       change = {
         op: 'add',
         key: data.component.key,
-        container: data.parent.key, // Parent component
-        path: data.path, // Path to container within parent component.
-        index: data.index, // Index of component in parent container.
+        container: data.parent.key,
+        // Parent component
+        path: data.path,
+        // Path to container within parent component.
+        index: data.index,
+        // Index of component in parent container.
         component: data.component
       };
       break;
+
     case 'edit':
       change = {
         op: 'edit',
         key: data.originalComponent.key,
-        patches: compare(data.originalComponent, data.component)
-      };
+        patches: (0, _fastJsonPatch.compare)(data.originalComponent, data.component)
+      }; // Don't save if nothing changed.
 
-      // Don't save if nothing changed.
       if (!change.patches.length) {
         change = null;
       }
+
       break;
+
     case 'remove':
       change = {
         op: 'remove',
-        key: data.component.key,
+        key: data.component.key
       };
       break;
   }
@@ -303,74 +377,77 @@ export function generateFormChange(type, data) {
   return change;
 }
 
-export function applyFormChanges(form, changes) {
-  const failed = [];
-  changes.forEach(function(change) {
+function applyFormChanges(form, changes) {
+  var failed = [];
+  changes.forEach(function (change) {
     var found = false;
+
     switch (change.op) {
       case 'add':
-        var newComponent = change.component;
+        var newComponent = change.component; // Find the container to set the component in.
 
-        // Find the container to set the component in.
-        findComponent(form.components, change.container, null, function(parent) {
+        findComponent(form.components, change.container, null, function (parent) {
           if (!change.container) {
             parent = form;
-          }
+          } // A move will first run an add so remove any existing components with matching key before inserting.
 
-          // A move will first run an add so remove any existing components with matching key before inserting.
-          findComponent(form.components, change.key, null, function(component, path) {
+
+          findComponent(form.components, change.key, null, function (component, path) {
             // If found, use the existing component. (If someone else edited it, the changes would be here)
             newComponent = component;
             removeComponent(form.components, path);
           });
-
           found = true;
-          var container = get(parent, change.path);
+          var container = (0, _get.default)(parent, change.path);
           container.splice(change.index, 0, newComponent);
         });
         break;
+
       case 'remove':
-        findComponent(form.components, change.key, null, function(component, path) {
+        findComponent(form.components, change.key, null, function (component, path) {
           found = true;
-          const oldComponent = get(form.components, path);
+          var oldComponent = (0, _get.default)(form.components, path);
+
           if (oldComponent.key !== component.key) {
             path.pop();
           }
+
           removeComponent(form.components, path);
         });
         break;
-      case 'edit':
-        findComponent(form.components, change.key, null, function(component, path) {
-          found = true;
-          try {
-            const oldComponent = get(form.components, path);
-            const newComponent = applyPatch(component, change.patches).newDocument;
 
-            if (oldComponent.key !== newComponent.key) {
+      case 'edit':
+        findComponent(form.components, change.key, null, function (component, path) {
+          found = true;
+
+          try {
+            var oldComponent = (0, _get.default)(form.components, path);
+            var _newComponent = (0, _fastJsonPatch.applyPatch)(component, change.patches).newDocument;
+
+            if (oldComponent.key !== _newComponent.key) {
               path.pop();
             }
 
-            set(form.components, path, newComponent);
-          }
-          catch (err) {
+            (0, _set.default)(form.components, path, _newComponent);
+          } catch (err) {
             failed.push(change);
           }
         });
         break;
+
       case 'move':
         break;
     }
+
     if (!found) {
       failed.push(change);
     }
   });
-
   return {
-    form,
-    failed
+    form: form,
+    failed: failed
   };
 }
-
 /**
  * Flatten the form components for data manipulation.
  *
@@ -382,14 +459,15 @@ export function applyFormChanges(form, changes) {
  * @returns {Object}
  *   The flattened components map.
  */
-export function flattenComponents(components, includeAll) {
-  const flattened = {};
-  eachComponent(components, (component, path) => {
+
+
+function flattenComponents(components, includeAll) {
+  var flattened = {};
+  eachComponent(components, function (component, path) {
     flattened[path] = component;
   }, includeAll);
   return flattened;
 }
-
 /**
  * Returns if this component has a conditional statement.
  *
@@ -397,14 +475,11 @@ export function flattenComponents(components, includeAll) {
  *
  * @returns {boolean} - TRUE - This component has a conditional, FALSE - No conditional provided.
  */
-export function hasCondition(component) {
-  return Boolean(
-    (component.customConditional) ||
-    (component.conditional && component.conditional.when) ||
-    (component.conditional && component.conditional.json)
-  );
-}
 
+
+function hasCondition(component) {
+  return Boolean(component.customConditional || component.conditional && component.conditional.when || component.conditional && component.conditional.json);
+}
 /**
  * Extension of standard #parseFloat(value) function, that also clears input string.
  *
@@ -414,12 +489,11 @@ export function hasCondition(component) {
  * @returns {Number}
  *   Parsed value.
  */
-export function parseFloatExt(value) {
-  return parseFloat(isString(value)
-    ? value.replace(/[^\de.+-]/gi, '')
-    : value);
-}
 
+
+function parseFloatExt(value) {
+  return parseFloat((0, _isString.default)(value) ? value.replace(/[^\de.+-]/gi, '') : value);
+}
 /**
  * Formats provided value in way how Currency component uses it.
  *
@@ -429,26 +503,22 @@ export function parseFloatExt(value) {
  * @returns {String}
  *   Value formatted for Currency component.
  */
-export function formatAsCurrency(value) {
-  const parsedValue = parseFloatExt(value);
 
-  if (isNaN(parsedValue)) {
+
+function formatAsCurrency(value) {
+  var parsedValue = parseFloatExt(value);
+
+  if ((0, _isNaN.default)(parsedValue)) {
     return '';
   }
 
-  const parts = round(parsedValue, 2)
-    .toString()
-    .split('.');
-  parts[0] = chunk(Array.from(parts[0]).reverse(), 3)
-    .reverse()
-    .map((part) => part
-      .reverse()
-      .join(''))
-    .join(',');
-  parts[1] = pad(parts[1], 2, '0');
+  var parts = (0, _round.default)(parsedValue, 2).toString().split('.');
+  parts[0] = (0, _chunk.default)(Array.from(parts[0]).reverse(), 3).reverse().map(function (part) {
+    return part.reverse().join('');
+  }).join(',');
+  parts[1] = (0, _pad.default)(parts[1], 2, '0');
   return parts.join('.');
 }
-
 /**
  * Escapes RegEx characters in provided String value.
  *
@@ -457,10 +527,11 @@ export function formatAsCurrency(value) {
  * @returns {string}
  *   String with escaped RegEx characters.
  */
-export function escapeRegExCharacters(value) {
+
+
+function escapeRegExCharacters(value) {
   return value.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&');
 }
-
 /**
  * Get the value for a component key, in the given submission.
  *
@@ -469,87 +540,70 @@ export function escapeRegExCharacters(value) {
  * @param {String} key
  *   A for components API key to search for.
  */
-export function getValue(submission, key) {
-  const search = (data) => {
-    if (isPlainObject(data)) {
-      if (has(data, key)) {
-        return _.get(data, key);
+
+
+function getValue(submission, key) {
+  var search = function search(data) {
+    if ((0, _isPlainObject.default)(data)) {
+      if ((0, _has.default)(data, key)) {
+        return _lodash.default.get(data, key);
       }
 
-      let value = null;
+      var value = null;
+      (0, _forOwn.default)(data, function (prop) {
+        var result = search(prop);
 
-      forOwn(data, (prop) => {
-        const result = search(prop);
-        if (!isNil(result)) {
+        if (!(0, _isNil.default)(result)) {
           value = result;
           return false;
         }
       });
-
       return value;
-    }
-    else {
+    } else {
       return null;
     }
   };
 
   return search(submission.data);
 }
-
 /**
  * Iterate over all components in a form and get string values for translation.
  * @param form
  */
-export function getStrings(form) {
-  const properties = ['label', 'title', 'legend', 'tooltip', 'description', 'placeholder', 'prefix', 'suffix', 'errorLabel', 'content', 'html'];
-  const strings = [];
-  eachComponent(form.components, component => {
-    properties.forEach(property => {
+
+
+function getStrings(form) {
+  var properties = ['label', 'title', 'legend', 'tooltip', 'description', 'placeholder', 'prefix', 'suffix', 'errorLabel', 'content', 'html'];
+  var strings = [];
+  eachComponent(form.components, function (component) {
+    properties.forEach(function (property) {
       if (component.hasOwnProperty(property) && component[property]) {
         strings.push({
           key: component.key,
           type: component.type,
-          property,
+          property: property,
           string: component[property]
         });
       }
     });
+
     if ((!component.dataSrc || component.dataSrc === 'values') && component.hasOwnProperty('values') && Array.isArray(component.values) && component.values.length) {
-      component.values.forEach((value, index) => {
+      component.values.forEach(function (value, index) {
         strings.push({
           key: component.key,
-          property: `value[${index}].label`,
+          property: "value[".concat(index, "].label"),
           string: component.values[index].label
         });
       });
-    }
+    } // Hard coded values from Day component
 
-    // Hard coded values from Day component
+
     if (component.type === 'day') {
-      [
-        'day',
-        'month',
-        'year',
-        'Day',
-        'Month',
-        'Year',
-        'january',
-        'february',
-        'march',
-        'april',
-        'may',
-        'june',
-        'july',
-        'august',
-        'september',
-        'october',
-        'november',
-        'december'
-      ].forEach(string => {
+      ['day', 'month', 'year', 'Day', 'Month', 'Year', 'january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'].forEach(function (string) {
         strings.push({
           key: component.key,
           property: 'day',
-          string,
+          string: string
         });
       });
 
@@ -557,7 +611,7 @@ export function getStrings(form) {
         strings.push({
           key: component.key,
           property: 'fields.day.placeholder',
-          string: component.fields.day.placeholder,
+          string: component.fields.day.placeholder
         });
       }
 
@@ -565,7 +619,7 @@ export function getStrings(form) {
         strings.push({
           key: component.key,
           property: 'fields.month.placeholder',
-          string: component.fields.month.placeholder,
+          string: component.fields.month.placeholder
         });
       }
 
@@ -573,35 +627,32 @@ export function getStrings(form) {
         strings.push({
           key: component.key,
           property: 'fields.year.placeholder',
-          string: component.fields.year.placeholder,
+          string: component.fields.year.placeholder
         });
       }
     }
 
     if (component.type === 'editgrid') {
-      const string = component.addAnother || 'Add Another';
+      var string = component.addAnother || 'Add Another';
+
       if (component.addAnother) {
         strings.push({
           key: component.key,
           property: 'addAnother',
-          string,
+          string: string
         });
       }
     }
 
     if (component.type === 'select') {
-      [
-        'loading...',
-        'Type to search'
-      ].forEach(string => {
+      ['loading...', 'Type to search'].forEach(function (string) {
         strings.push({
           key: component.key,
           property: 'select',
-          string,
+          string: string
         });
       });
     }
   }, true);
-
   return strings;
 }

@@ -1,12 +1,14 @@
-import ReCaptchaComponent from './ReCaptcha';
+"use strict";
 
-import {
-  comp1
-} from './fixtures';
+var _ReCaptcha = _interopRequireDefault(require("./ReCaptcha"));
 
-describe('reCAPTCHA Component', () => {
-  it('Should build a reCAPTCHA component in builder mode', (done) => {
-    new ReCaptchaComponent(comp1, {
+var _fixtures = require("./fixtures");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+describe('reCAPTCHA Component', function () {
+  it('Should build a reCAPTCHA component in builder mode', function (done) {
+    new _ReCaptcha.default(_fixtures.comp1, {
       builder: true
     });
     done();

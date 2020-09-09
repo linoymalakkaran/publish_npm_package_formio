@@ -1,4 +1,10 @@
-export default {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = {
   lng: 'en',
   nsSeparator: '::',
   keySeparator: '.|.',
@@ -14,7 +20,8 @@ export default {
         required: '{{field}} is required',
         unique: '{{field}} must be unique',
         array: '{{field}} must be an array',
-        array_nonempty: '{{field}} must be a non-empty array', // eslint-disable-line camelcase
+        array_nonempty: '{{field}} must be a non-empty array',
+        // eslint-disable-line camelcase
         nonarray: '{{field}} must not be an array',
         select: '{{field}} contains an invalid selection',
         pattern: '{{field}} does not match the pattern {{pattern}}',
@@ -28,11 +35,16 @@ export default {
         minDate: '{{field}} should not contain date before {{- minDate}}',
         maxYear: '{{field}} should not contain year greater than {{maxYear}}',
         minYear: '{{field}} should not contain year less than {{minYear}}',
-        invalid_email: '{{field}} must be a valid email.', // eslint-disable-line camelcase
-        invalid_url: '{{field}} must be a valid url.', // eslint-disable-line camelcase
-        invalid_regex: '{{field}} does not match the pattern {{regex}}.', // eslint-disable-line camelcase
-        invalid_date: '{{field}} is not a valid date.', // eslint-disable-line camelcase
-        invalid_day: '{{field}} is not a valid day.', // eslint-disable-line camelcase
+        invalid_email: '{{field}} must be a valid email.',
+        // eslint-disable-line camelcase
+        invalid_url: '{{field}} must be a valid url.',
+        // eslint-disable-line camelcase
+        invalid_regex: '{{field}} does not match the pattern {{regex}}.',
+        // eslint-disable-line camelcase
+        invalid_date: '{{field}} is not a valid date.',
+        // eslint-disable-line camelcase
+        invalid_day: '{{field}} is not a valid day.',
+        // eslint-disable-line camelcase
         mask: '{{field}} does not match the mask.',
         stripe: '{{stripe}}',
         month: 'Month',
@@ -63,3 +75,4 @@ export default {
     }
   }
 };
+exports.default = _default;

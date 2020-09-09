@@ -1,120 +1,177 @@
-const renders = require('../../test/renders');
-const forms = require('../../test/formtest');
-const pretty = require('pretty');
-const fs = require('fs');
-import assert from 'power-assert';
-import i18next from 'i18next';
-import NativePromise from 'native-promise-only';
+"use strict";
 
-const i18Defaults = require('../i18n');
-const AllComponents = require('../components').default;
-const Components = require('../components/Components').default;
-const templates = require('./index').default;
-const Form = require('../Form').default;
+require("core-js/modules/es.array.concat");
+
+require("core-js/modules/es.array.for-each");
+
+require("core-js/modules/es.array.slice");
+
+require("core-js/modules/es.object.keys");
+
+require("core-js/modules/web.dom-collections.for-each");
+
+var _powerAssert = _interopRequireDefault(require("power-assert"));
+
+var _i18next = _interopRequireDefault(require("i18next"));
+
+var _nativePromiseOnly = _interopRequireDefault(require("native-promise-only"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var renders = require('../../test/renders');
+
+var forms = require('../../test/formtest');
+
+var pretty = require('pretty');
+
+var fs = require('fs');
+
+var i18Defaults = require('../i18n');
+
+var AllComponents = require('../components').default;
+
+var Components = require('../components/Components').default;
+
+var templates = require('./index').default;
+
+var Form = require('../Form').default;
+
 Components.setComponents(AllComponents);
-const componentDir = 'components';
+var componentDir = 'components';
 
-const fixComponent = (instance, index = 0) => {
+var fixComponent = function fixComponent(instance) {
+  var index = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
   instance.id = instance.key;
   index++;
+
   if (instance.everyComponent) {
-    instance.everyComponent(component => fixComponent(component, index));
+    instance.everyComponent(function (component) {
+      return fixComponent(component, index);
+    });
+
     if (instance.hasOwnProperty('subForm') && instance.subForm) {
       instance.subForm.id = instance.key;
     }
   }
+
   if (instance.type === 'file') {
     instance.support.filereader = true;
     instance.support.hasWarning = false;
   }
 };
 
-describe('Rendering Tests', () => {
-  before(() => {
-    return new NativePromise((resolve, reject) => {
-      i18next.init(i18Defaults, (err) => {
+describe('Rendering Tests', function () {
+  before(function () {
+    return new _nativePromiseOnly.default(function (resolve, reject) {
+      _i18next.default.init(i18Defaults, function (err) {
         if (err) {
           return reject(err);
         }
+
         resolve();
       });
     });
   });
-  Object.keys(templates).forEach(framework => {
-    describe(`Framework ${framework}`, () => {
-      describe('Form Renders', () => {
-        Object.keys(forms).forEach(form => {
-          it(`Form renders ${form}`, () => {
-            return new Form(forms[form], { template: framework }).ready.then(instance => {
+  Object.keys(templates).forEach(function (framework) {
+    describe("Framework ".concat(framework), function () {
+      describe('Form Renders', function () {
+        Object.keys(forms).forEach(function (form) {
+          it("Form renders ".concat(form), function () {
+            return new Form(forms[form], {
+              template: framework
+            }).ready.then(function (instance) {
               fixComponent(instance);
-              assert.equal(renders[`form-${framework}-${form}`], pretty(instance.render(), { ocd: true }));
+
+              _powerAssert.default.equal(renders["form-".concat(framework, "-").concat(form)], pretty(instance.render(), {
+                ocd: true
+              }));
             });
           });
         });
       });
-
-      Object.keys(AllComponents).forEach(component => {
-        describe(`Component ${component}`, () => {
-          it(`Renders ${component} for ${framework}`, (done) => {
-            const instance = new AllComponents[component]({}, { template: framework });
+      Object.keys(AllComponents).forEach(function (component) {
+        describe("Component ".concat(component), function () {
+          it("Renders ".concat(component, " for ").concat(framework), function (done) {
+            var instance = new AllComponents[component]({}, {
+              template: framework
+            });
             fixComponent(instance);
-            assert.equal(renders[`component-${framework}-${component}`], pretty(instance.render(), { ocd: true }));
+
+            _powerAssert.default.equal(renders["component-".concat(framework, "-").concat(component)], pretty(instance.render(), {
+              ocd: true
+            }));
+
             done();
           });
-          it(`Renders ${component} for ${framework} as required`, (done) => {
-            const instance = new AllComponents[component]({
+          it("Renders ".concat(component, " for ").concat(framework, " as required"), function (done) {
+            var instance = new AllComponents[component]({
               validate: {
                 required: true
               }
             }, {
-              template: framework,
+              template: framework
             });
             fixComponent(instance);
-            assert.equal(renders[`component-${framework}-${component}-required`], pretty(instance.render(), { ocd: true }));
+
+            _powerAssert.default.equal(renders["component-".concat(framework, "-").concat(component, "-required")], pretty(instance.render(), {
+              ocd: true
+            }));
+
             done();
           });
-          it(`Renders ${component} for ${framework} as multiple`, (done) => {
-            const instance = new AllComponents[component]({
+          it("Renders ".concat(component, " for ").concat(framework, " as multiple"), function (done) {
+            var instance = new AllComponents[component]({
               multiple: true
             }, {
-              template: framework,
+              template: framework
             });
             fixComponent(instance);
-            assert.equal(renders[`component-${framework}-${component}-multiple`], pretty(instance.render(), { ocd: true }));
+
+            _powerAssert.default.equal(renders["component-".concat(framework, "-").concat(component, "-multiple")], pretty(instance.render(), {
+              ocd: true
+            }));
+
             done();
           });
 
-          if (fs.existsSync(`./lib/${componentDir}/${component}/fixtures/values.js`)) {
-            const values = require(`../${componentDir}/${component}/fixtures/values.js`).default.slice(0);
+          if (fs.existsSync("./lib/".concat(componentDir, "/").concat(component, "/fixtures/values.js"))) {
+            var values = require("../".concat(componentDir, "/").concat(component, "/fixtures/values.js")).default.slice(0);
 
             values.unshift(undefined);
-
-            values.forEach((value, index) => {
-              it(`Renders ${component} for ${framework} value ${index} as html`, (done) => {
-                const instance = new AllComponents[component]({}, {
+            values.forEach(function (value, index) {
+              it("Renders ".concat(component, " for ").concat(framework, " value ").concat(index, " as html"), function (done) {
+                var instance = new AllComponents[component]({}, {
                   template: framework,
                   flatten: true,
-                  renderMode: 'html',
+                  renderMode: 'html'
                 });
                 instance.dataValue = value;
                 fixComponent(instance);
-                assert.equal(renders[`component-${framework}-${component}-html-value${index}`], pretty(instance.render(), { ocd: true }));
+
+                _powerAssert.default.equal(renders["component-".concat(framework, "-").concat(component, "-html-value").concat(index)], pretty(instance.render(), {
+                  ocd: true
+                }));
+
                 done();
               });
-              it(`Renders ${component} for ${framework} value ${index} as string`, (done) => {
-                const instance = new AllComponents[component]({}, {
+              it("Renders ".concat(component, " for ").concat(framework, " value ").concat(index, " as string"), function (done) {
+                var instance = new AllComponents[component]({}, {
                   template: framework,
                   flatten: true,
-                  renderMode: 'html',
+                  renderMode: 'html'
                 });
                 fixComponent(instance);
-                const file = renders[`component-${framework}-${component}-string-value${index}`];
-                const val = instance.getValueAsString(value);
+                var file = renders["component-".concat(framework, "-").concat(component, "-string-value").concat(index)];
+                var val = instance.getValueAsString(value);
 
                 if (val !== file) {
                   console.log('er');
                 }
-                assert.equal(renders[`component-${framework}-${component}-string-value${index}`], pretty(instance.getValueAsString(value), { ocd: true }));
+
+                _powerAssert.default.equal(renders["component-".concat(framework, "-").concat(component, "-string-value").concat(index)], pretty(instance.getValueAsString(value), {
+                  ocd: true
+                }));
+
                 done();
               });
             });

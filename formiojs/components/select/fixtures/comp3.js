@@ -1,20 +1,26 @@
-export const multiSelect = {
-  type: 'select',
-      label: 'Companies',
-      key: 'companies',
-      placeholder: 'Select a company',
-      dataSrc: 'url',
-      data: {
-        url: 'https://example.form.io/company/submission?limit={{ limit }}&skip={{ skip }}'
-      },
-      valueProperty: 'data.name',
-      searchField: 'data.name__regex',
-      template: '<span>{{ item.data.name }}</span>',
-      multiple: true,
-      input: true
-};
+"use strict";
 
-export const multiSelectOptions = [{
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.multiSelectOptions = exports.multiSelect = void 0;
+var multiSelect = {
+  type: 'select',
+  label: 'Companies',
+  key: 'companies',
+  placeholder: 'Select a company',
+  dataSrc: 'url',
+  data: {
+    url: 'https://example.form.io/company/submission?limit={{ limit }}&skip={{ skip }}'
+  },
+  valueProperty: 'data.name',
+  searchField: 'data.name__regex',
+  template: '<span>{{ item.data.name }}</span>',
+  multiple: true,
+  input: true
+};
+exports.multiSelect = multiSelect;
+var multiSelectOptions = [{
   '_id': '5c5f1901a590ab507db886b1',
   'owner': '553dbfc08d22d5cb1a7024f2',
   'roles': [],
@@ -205,4 +211,4 @@ export const multiSelectOptions = [{
   'modified': '2019-02-09T18:14:05.354Z',
   'project': '58b78b87f5609a0070f3f456'
 }];
-
+exports.multiSelectOptions = multiSelectOptions;

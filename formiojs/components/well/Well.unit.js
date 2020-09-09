@@ -1,24 +1,25 @@
-import Harness from '../../../test/harness';
-import WellComponent from './Well';
+"use strict";
 
-import {
-  comp1
-} from './fixtures';
-import { expect } from 'chai';
+var _harness = _interopRequireDefault(require("../../../test/harness"));
 
-describe('Well Component', () => {
-  it('Should build a Well component', () => {
-    return Harness.testCreate(WellComponent, comp1).then((component) => {
-      Harness.testElements(component, 'input[type="text"]', 2);
+var _Well = _interopRequireDefault(require("./Well"));
+
+var _fixtures = require("./fixtures");
+
+var _chai = require("chai");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+describe('Well Component', function () {
+  it('Should build a Well component', function () {
+    return _harness.default.testCreate(_Well.default, _fixtures.comp1).then(function (component) {
+      _harness.default.testElements(component, 'input[type="text"]', 2);
     });
   });
-
-  it('Should skip validation on non-input nested components', done => {
-    Harness.testCreate(WellComponent, comp1)
-      .then(cmp => {
-        expect(cmp.shouldSkipValidation()).to.be.true;
-        done();
-      }, done)
-      .catch(done);
+  it('Should skip validation on non-input nested components', function (done) {
+    _harness.default.testCreate(_Well.default, _fixtures.comp1).then(function (cmp) {
+      (0, _chai.expect)(cmp.shouldSkipValidation()).to.be.true;
+      done();
+    }, done).catch(done);
   });
 });

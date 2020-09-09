@@ -1,6 +1,33 @@
-import _ from 'lodash';
-import { eachComponent, uniqueKey } from './utils';
-export default {
+"use strict";
+
+require("core-js/modules/es.array.concat");
+
+require("core-js/modules/es.array.for-each");
+
+require("core-js/modules/es.array.includes");
+
+require("core-js/modules/es.array.iterator");
+
+require("core-js/modules/es.array.map");
+
+require("core-js/modules/es.object.to-string");
+
+require("core-js/modules/web.dom-collections.for-each");
+
+require("core-js/modules/web.dom-collections.iterator");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _lodash = _interopRequireDefault(require("lodash"));
+
+var _utils = require("./utils");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _default = {
   /**
    * Appends a number to a component.key to keep it unique
    *
@@ -9,25 +36,25 @@ export default {
    * @param {Object} component
    *   The component to uniquify
    */
-  uniquify(container, component) {
-    let changed = false;
-    const formKeys = {};
-    eachComponent(container, (comp) => {
+  uniquify: function uniquify(container, component) {
+    var changed = false;
+    var formKeys = {};
+    (0, _utils.eachComponent)(container, function (comp) {
       formKeys[comp.key] = true;
 
       if (['address', 'container', 'datagrid', 'editgrid', 'tree'].includes(component.type) || component.tree || component.arrayTree) {
         return true;
       }
-    }, true);
+    }, true); // Recurse into all child components.
 
-    // Recurse into all child components.
-    eachComponent([component], (component) => {
+    (0, _utils.eachComponent)([component], function (component) {
       // Skip key uniquification if this component doesn't have a key.
       if (!component.key) {
         return;
       }
 
-      const newKey = uniqueKey(formKeys, component.key);
+      var newKey = (0, _utils.uniqueKey)(formKeys, component.key);
+
       if (newKey !== component.key) {
         component.key = newKey;
         changed = true;
@@ -41,26 +68,20 @@ export default {
     }, true);
     return changed;
   },
-
   additionalShortcuts: {
-    button: [
-      'Enter',
-      'Esc'
-    ]
+    button: ['Enter', 'Esc']
   },
-
-  getAlphaShortcuts() {
-    return _.range('A'.charCodeAt(), 'Z'.charCodeAt() + 1).map((charCode) => String.fromCharCode(charCode));
+  getAlphaShortcuts: function getAlphaShortcuts() {
+    return _lodash.default.range('A'.charCodeAt(), 'Z'.charCodeAt() + 1).map(function (charCode) {
+      return String.fromCharCode(charCode);
+    });
   },
-
-  getAdditionalShortcuts(type) {
+  getAdditionalShortcuts: function getAdditionalShortcuts(type) {
     return this.additionalShortcuts[type] || [];
   },
-
-  getBindedShortcuts(components, input) {
-    const result = [];
-
-    eachComponent(components, (component) => {
+  getBindedShortcuts: function getBindedShortcuts(components, input) {
+    var result = [];
+    (0, _utils.eachComponent)(components, function (component) {
       if (component === input) {
         return;
       }
@@ -68,28 +89,28 @@ export default {
       if (component.shortcut) {
         result.push(component.shortcut);
       }
+
       if (component.values) {
-        component.values.forEach((value) => {
+        component.values.forEach(function (value) {
           if (value.shortcut) {
             result.push(value.shortcut);
           }
         });
       }
     }, true);
-
     return result;
   },
-
-  getAvailableShortcuts(form, component) {
+  getAvailableShortcuts: function getAvailableShortcuts(form, component) {
     if (!component) {
       return [];
     }
-    return [''].concat(_.difference(
-      this.getAlphaShortcuts().concat(this.getAdditionalShortcuts(component.type)),
-      this.getBindedShortcuts(form.components, component)),
-    ).map((shortcut) => ({
-      label: shortcut,
-      value: shortcut,
-    }));
+
+    return [''].concat(_lodash.default.difference(this.getAlphaShortcuts().concat(this.getAdditionalShortcuts(component.type)), this.getBindedShortcuts(form.components, component))).map(function (shortcut) {
+      return {
+        label: shortcut,
+        value: shortcut
+      };
+    });
   }
 };
+exports.default = _default;

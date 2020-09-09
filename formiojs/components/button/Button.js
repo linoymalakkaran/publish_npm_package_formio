@@ -1,447 +1,641 @@
-import _ from 'lodash';
-import NativePromise from 'native-promise-only';
-import Field from '../_classes/field/Field';
-import Input from '../_classes/input/Input';
-import { flattenComponents } from '../../utils/utils';
+"use strict";
 
-export default class ButtonComponent extends Field {
-  static schema(...extend) {
-    return Input.schema({
-      type: 'button',
-      label: 'Submit',
-      key: 'submit',
-      size: 'md',
-      leftIcon: '',
-      rightIcon: '',
-      block: false,
-      action: 'submit',
-      persistent: false,
-      disableOnInvalid: false,
-      theme: 'primary',
-      dataGridLabel: true
-    }, ...extend);
+require("core-js/modules/es.symbol");
+
+require("core-js/modules/es.symbol.description");
+
+require("core-js/modules/es.symbol.iterator");
+
+require("core-js/modules/es.array.concat");
+
+require("core-js/modules/es.array.find");
+
+require("core-js/modules/es.array.includes");
+
+require("core-js/modules/es.array.index-of");
+
+require("core-js/modules/es.array.iterator");
+
+require("core-js/modules/es.array.join");
+
+require("core-js/modules/es.array.map");
+
+require("core-js/modules/es.array.reduce");
+
+require("core-js/modules/es.function.name");
+
+require("core-js/modules/es.object.get-own-property-descriptor");
+
+require("core-js/modules/es.object.get-prototype-of");
+
+require("core-js/modules/es.object.keys");
+
+require("core-js/modules/es.object.to-string");
+
+require("core-js/modules/es.promise");
+
+require("core-js/modules/es.reflect.construct");
+
+require("core-js/modules/es.reflect.get");
+
+require("core-js/modules/es.regexp.constructor");
+
+require("core-js/modules/es.regexp.exec");
+
+require("core-js/modules/es.regexp.to-string");
+
+require("core-js/modules/es.string.iterator");
+
+require("core-js/modules/es.string.replace");
+
+require("core-js/modules/es.string.search");
+
+require("core-js/modules/es.string.split");
+
+require("core-js/modules/web.dom-collections.iterator");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _lodash = _interopRequireDefault(require("lodash"));
+
+var _Field2 = _interopRequireDefault(require("../_classes/field/Field"));
+
+var _Input = _interopRequireDefault(require("../_classes/input/Input"));
+
+var _utils = require("../../utils/utils");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+var ButtonComponent = /*#__PURE__*/function (_Field) {
+  _inherits(ButtonComponent, _Field);
+
+  var _super = _createSuper(ButtonComponent);
+
+  function ButtonComponent() {
+    _classCallCheck(this, ButtonComponent);
+
+    return _super.apply(this, arguments);
   }
 
-  static get builderInfo() {
-    return {
-      title: 'Button',
-      group: 'basic',
-      icon: 'stop',
-      documentation: 'http://help.form.io/userguide/#button',
-      weight: 110,
-      schema: ButtonComponent.schema()
-    };
-  }
-
-  get defaultSchema() {
-    return ButtonComponent.schema();
-  }
-
-  get inputInfo() {
-    const info = super.elementInfo();
-    info.type = 'button';
-    info.attr.type = (['submit', 'saveState'].includes(this.component.action)) ? 'submit' : 'button';
-    this.component.theme = this.component.theme || 'default';
-    info.attr.class = `btn btn-${this.component.theme}`;
-    if (this.component.size) {
-      info.attr.class += ` btn-${this.component.size}`;
+  _createClass(ButtonComponent, [{
+    key: "createLabel",
+    // No label needed for buttons.
+    value: function createLabel() {}
+  }, {
+    key: "createInput",
+    value: function createInput(container) {
+      this.refs.button = _get(_getPrototypeOf(ButtonComponent.prototype), "createInput", this).call(this, container);
+      return this.refs.button;
     }
-    if (this.component.block) {
-      info.attr.class += ' btn-block';
+  }, {
+    key: "getValue",
+    value: function getValue() {
+      return this.dataValue;
     }
-    if (this.component.customClass) {
-      info.attr.class += ` ${this.component.customClass}`;
+  }, {
+    key: "render",
+    value: function render() {
+      if (this.viewOnly || this.options.hideButtons) {
+        this._visible = false;
+      }
+
+      return _get(_getPrototypeOf(ButtonComponent.prototype), "render", this).call(this, this.renderTemplate('button', {
+        component: this.component,
+        input: this.inputInfo
+      }));
     }
-    info.content = this.t(this.component.label);
-    return info;
-  }
+  }, {
+    key: "attachButton",
+    value: function attachButton() {
+      var _this = this;
 
-  get labelInfo() {
-    return {
-      hidden: true
-    };
-  }
+      this.addShortcut(this.refs.button);
+      var onChange = null;
+      var onError = null;
 
-  set loading(loading) {
-    this.setLoading(this.refs.button, loading);
-  }
+      if (this.component.action === 'submit') {
+        this.on('submitButton', function () {
+          _this.disabled = true;
+        }, true);
+        this.on('submitDone', function (message) {
+          var resultMessage = _lodash.default.isString(message) ? message : _this.t('complete');
+          _this.loading = false;
+          _this.disabled = false;
 
-  get skipInEmail() {
-    return true;
-  }
+          _this.addClass(_this.refs.button, 'btn-success submit-success');
 
-  // No label needed for buttons.
-  createLabel() {}
+          _this.removeClass(_this.refs.button, 'btn-danger submit-fail');
 
-  createInput(container) {
-    this.refs.button = super.createInput(container);
-    return this.refs.button;
-  }
+          _this.addClass(_this.refs.buttonMessageContainer, 'has-success');
 
-  get emptyValue() {
-    return false;
-  }
+          _this.removeClass(_this.refs.buttonMessageContainer, 'has-error');
 
-  getValue() {
-    return this.dataValue;
-  }
+          _this.setContent(_this.refs.buttonMessage, resultMessage);
+        }, true);
+        this.on('submitError', function (message) {
+          var resultMessage = _lodash.default.isString(message) ? message : _this.t(_this.errorMessage('error'));
+          _this.loading = false;
+          _this.disabled = false;
+          _this.hasError = true;
 
-  get clicked() {
-    return this.dataValue;
-  }
+          _this.removeClass(_this.refs.button, 'btn-success submit-success');
 
-  get defaultValue() {
-    return false;
-  }
+          _this.addClass(_this.refs.button, 'btn-danger submit-fail');
 
-  get className() {
-    let className = super.className;
-    className += ' form-group';
-    return className;
-  }
+          _this.removeClass(_this.refs.buttonMessageContainer, 'has-success');
 
-  get oauthConfig() {
-    if (_.has(this, 'root.form.config.oauth') && this.component.oauthProvider) {
-      return this.root.form.config.oauth[this.component.oauthProvider];
-    }
-    // Legacy oauth location.
-    if (this.component.oauth) {
-      return this.component.oauth;
-    }
-    return false;
-  }
+          _this.addClass(_this.refs.buttonMessageContainer, 'has-error');
 
-  render() {
-    if (this.viewOnly || this.options.hideButtons) {
-      this._visible = false;
-    }
-    return super.render(this.renderTemplate('button', {
-      component: this.component,
-      input: this.inputInfo,
-    }));
-  }
+          _this.setContent(_this.refs.buttonMessage, resultMessage);
+        }, true);
 
-  attachButton() {
-    this.addShortcut(this.refs.button);
-    let onChange = null;
-    let onError = null;
-    if (this.component.action === 'submit') {
-      this.on('submitButton', () => {
-        this.disabled = true;
-      }, true);
-      this.on('submitDone', (message) => {
-        const resultMessage = _.isString(message) ? message : this.t('complete');
-        this.loading = false;
-        this.disabled = false;
-        this.addClass(this.refs.button, 'btn-success submit-success');
-        this.removeClass(this.refs.button, 'btn-danger submit-fail');
-        this.addClass(this.refs.buttonMessageContainer, 'has-success');
-        this.removeClass(this.refs.buttonMessageContainer, 'has-error');
-        this.setContent(this.refs.buttonMessage, resultMessage);
-      }, true);
-      this.on('submitError', (message) => {
-        const resultMessage = _.isString(message) ? message : this.t(this.errorMessage('submitError'));
-        this.loading = false;
-        this.disabled = false;
-        this.hasError = true;
-        this.removeClass(this.refs.button, 'btn-success submit-success');
-        this.addClass(this.refs.button, 'btn-danger submit-fail');
-        this.removeClass(this.refs.buttonMessageContainer, 'has-success');
-        this.addClass(this.refs.buttonMessageContainer, 'has-error');
-        this.setContent(this.refs.buttonMessage, resultMessage);
-      }, true);
-      onChange = (value, isValid) => {
-        this.removeClass(this.refs.button, 'btn-success submit-success');
-        if (isValid) {
-          this.removeClass(this.refs.button, 'btn-danger submit-fail');
-          if (this.hasError) {
-            this.hasError = false;
-            this.setContent(this.refs.buttonMessage, '');
-            this.removeClass(this.refs.buttonMessageContainer, 'has-success');
-            this.removeClass(this.refs.buttonMessageContainer, 'has-error');
+        onChange = function onChange(value, isValid) {
+          _this.removeClass(_this.refs.button, 'btn-success submit-success');
+
+          _this.removeClass(_this.refs.button, 'btn-danger submit-fail');
+
+          if (isValid && _this.hasError) {
+            _this.hasError = false;
+
+            _this.setContent(_this.refs.buttonMessage, '');
+
+            _this.removeClass(_this.refs.buttonMessageContainer, 'has-success');
+
+            _this.removeClass(_this.refs.buttonMessageContainer, 'has-error');
           }
-        }
-      };
-      onError = () => {
-        this.hasError = true;
-        this.removeClass(this.refs.button, 'btn-success submit-success');
-        this.addClass(this.refs.button, 'btn-danger submit-fail');
-        this.removeClass(this.refs.buttonMessageContainer, 'has-success');
-        this.addClass(this.refs.buttonMessageContainer, 'has-error');
-        this.setContent(this.refs.buttonMessage, this.t(this.errorMessage('submitError')));
-      };
-    }
+        };
 
-    if (this.component.action === 'url') {
-      this.on('requestButton', () => {
-        this.disabled = true;
-      }, true);
-      this.on('requestDone', () => {
-        this.loading = false;
-        this.disabled = false;
-      }, true);
-    }
+        onError = function onError() {
+          _this.hasError = true;
 
-    this.on('change', (value, flags) => {
-      let isValid = value.isValid;
-      //check root validity only if disableOnInvalid is set and when it is not possible to make submission because of validation errors
-      if (flags && flags.noValidate && (this.component.disableOnInvalid || this.hasError)) {
-        isValid = flags.rootValidity || (this.root ? this.root.checkValidity(this.root.data, null, null, true) : true);
-        flags.rootValidity = isValid;
+          _this.removeClass(_this.refs.button, 'btn-success submit-success');
+
+          _this.addClass(_this.refs.button, 'btn-danger submit-fail');
+
+          _this.removeClass(_this.refs.buttonMessageContainer, 'has-success');
+
+          _this.addClass(_this.refs.buttonMessageContainer, 'has-error');
+
+          _this.setContent(_this.refs.buttonMessage, _this.t(_this.errorMessage('error')));
+        };
       }
-      this.loading = false;
-      this.disabled = this.shouldDisabled || (this.component.disableOnInvalid && !isValid);
-      this.setDisabled(this.refs.button, this.disabled);
 
-      if (onChange) {
-        onChange(value, isValid);
+      if (this.component.action === 'url') {
+        this.on('requestButton', function () {
+          _this.disabled = true;
+        }, true);
+        this.on('requestDone', function () {
+          _this.loading = false;
+          _this.disabled = false;
+        }, true);
       }
-    }, true);
 
-    this.on('error', () => {
-      this.loading = false;
-      this.disabled = false;
-      if (onError) {
-        onError();
-      }
-    }, true);
+      this.on('change', function (value, flags) {
+        var isValid = value.isValid;
 
-    this.addEventListener(this.refs.button, 'click', this.onClick.bind(this));
-
-    this.disabled = this.shouldDisabled;
-
-    function getUrlParameter(name) {
-      name = name.replace(/[[]/, '\\[').replace(/[\]]/, '\\]');
-      const regex = new RegExp(`[\\?&]${name}=([^&#]*)`);
-      const results = regex.exec(location.search);
-      if (!results) {
-        return results;
-      }
-      return decodeURIComponent(results[1].replace(/\+/g, ' '));
-    }
-
-    // If this is an OpenID Provider initiated login, perform the click event immediately
-    if ((this.component.action === 'oauth') && this.oauthConfig && !this.oauthConfig.error) {
-      const iss = getUrlParameter('iss');
-      if (iss && (this.oauthConfig.authURI.indexOf(iss) === 0)) {
-        this.openOauth(this.oauthConfig);
-      }
-    }
-  }
-
-  attach(element) {
-    this.loadRefs(element, {
-      button: 'single',
-      buttonMessageContainer: 'single',
-      buttonMessage: 'single'
-    });
-
-    const superAttach = super.attach(element);
-    this.attachButton();
-    return superAttach;
-  }
-  /* eslint-enable max-statements */
-
-  detach(element) {
-    if (element && this.refs.button) {
-      this.removeShortcut(this.refs.button);
-    }
-    super.detach();
-  }
-
-  onClick(event) {
-    this.triggerReCaptcha();
-    // Don't click if disabled or in builder mode.
-    if (this.disabled || this.options.attachMode === 'builder') {
-      return;
-    }
-    this.dataValue = true;
-    if (this.component.action !== 'submit' && this.component.showValidations) {
-      this.emit('checkValidity', this.data);
-    }
-    switch (this.component.action) {
-      case 'saveState':
-      case 'submit':
-        event.preventDefault();
-        event.stopPropagation();
-        this.loading = true;
-        this.emit('submitButton', {
-          state: this.component.state || 'submitted',
-          component: this.component,
-          instance: this
-        });
-        break;
-      case 'event':
-        this.emit(this.interpolate(this.component.event), this.data);
-        this.events.emit(this.interpolate(this.component.event), this.data);
-        this.emit('customEvent', {
-          type: this.interpolate(this.component.event),
-          component: this.component,
-          data: this.data,
-          event: event
-        });
-        break;
-      case 'custom': {
-        // Get the FormioForm at the root of this component's tree
-        const form = this.getRoot();
-        // Get the form's flattened schema components
-        const flattened = flattenComponents(form.component.components, true);
-        // Create object containing the corresponding HTML element components
-        const components = {};
-        _.each(flattened, (component, key) => {
-          const element = form.getComponent(key);
-          if (element) {
-            components[key] = element;
-          }
-        });
-
-        this.evaluate(this.component.custom, {
-          form,
-          flattened,
-          components
-        });
-        break;
-      }
-      case 'url':
-        this.loading = true;
-        this.emit('requestButton', {
-          component: this.component,
-          instance: this
-        });
-        this.emit('requestUrl', {
-          url: this.interpolate(this.component.url),
-          headers: this.component.headers
-        });
-        break;
-      case 'reset':
-        this.emit('resetForm');
-        break;
-      case 'delete':
-        this.emit('deleteSubmission');
-        break;
-      case 'oauth':
-        if (this.root === this) {
-          console.warn('You must add the OAuth button to a form for it to function properly');
-          return;
+        if (flags && flags.noValidate) {
+          isValid = flags.rootValidity || (_this.root ? _this.root.checkValidity(_this.root.data, null, null, true) : true);
+          flags.rootValidity = isValid;
         }
 
-        // Display Alert if OAuth config is missing
-        if (!this.oauthConfig) {
-          this.root.setAlert('danger', 'OAuth not configured. You must configure oauth for your project before it will work.');
+        _this.loading = false;
+        _this.disabled = _this.shouldDisabled || _this.component.disableOnInvalid && !isValid;
+
+        _this.setDisabled(_this.refs.button, _this.disabled);
+
+        if (onChange) {
+          onChange(value, isValid);
+        }
+      }, true);
+      this.on('error', function () {
+        _this.loading = false;
+        _this.disabled = false;
+
+        if (onError) {
+          onError();
+        }
+      }, true);
+      this.addEventListener(this.refs.button, 'click', this.onClick.bind(this));
+      this.disabled = this.shouldDisabled;
+
+      function getUrlParameter(name) {
+        name = name.replace(/[[]/, '\\[').replace(/[\]]/, '\\]');
+        var regex = new RegExp("[\\?&]".concat(name, "=([^&#]*)"));
+        var results = regex.exec(location.search);
+
+        if (!results) {
+          return results;
+        }
+
+        return decodeURIComponent(results[1].replace(/\+/g, ' '));
+      } // If this is an OpenID Provider initiated login, perform the click event immediately
+
+
+      if (this.component.action === 'oauth' && this.oauthConfig && !this.oauthConfig.error) {
+        var iss = getUrlParameter('iss');
+
+        if (iss && this.oauthConfig.authURI.indexOf(iss) === 0) {
+          this.openOauth(this.oauthConfig);
+        }
+      }
+    }
+  }, {
+    key: "attach",
+    value: function attach(element) {
+      this.loadRefs(element, {
+        button: 'single',
+        buttonMessageContainer: 'single',
+        buttonMessage: 'single'
+      });
+
+      var superAttach = _get(_getPrototypeOf(ButtonComponent.prototype), "attach", this).call(this, element);
+
+      this.attachButton();
+      return superAttach;
+    }
+    /* eslint-enable max-statements */
+
+  }, {
+    key: "detach",
+    value: function detach(element) {
+      if (element && this.refs.button) {
+        this.removeShortcut(this.refs.button);
+      }
+    }
+  }, {
+    key: "onClick",
+    value: function onClick(event) {
+      this.triggerReCaptcha(); // Don't click if disabled or in builder mode.
+
+      if (this.disabled || this.options.attachMode === 'builder') {
+        return;
+      }
+
+      this.dataValue = true;
+
+      if (this.component.action !== 'submit' && this.component.showValidations) {
+        this.emit('checkValidity', this.data);
+      }
+
+      switch (this.component.action) {
+        case 'saveState':
+        case 'submit':
+          event.preventDefault();
+          event.stopPropagation();
+          this.loading = true;
+          this.emit('submitButton', {
+            state: this.component.state || 'submitted',
+            component: this.component,
+            instance: this
+          });
           break;
-        }
 
-        // Display Alert if oAuth has an error is missing
-        if (this.oauthConfig.error) {
-          this.root.setAlert('danger', `The Following Error Has Occured ${this.oauthConfig.error}`);
+        case 'event':
+          this.emit(this.interpolate(this.component.event), this.data);
+          this.events.emit(this.interpolate(this.component.event), this.data);
+          this.emit('customEvent', {
+            type: this.interpolate(this.component.event),
+            component: this.component,
+            data: this.data,
+            event: event
+          });
           break;
-        }
 
-        this.openOauth(this.oauthConfig);
+        case 'custom':
+          {
+            // Get the FormioForm at the root of this component's tree
+            var form = this.getRoot(); // Get the form's flattened schema components
 
-        break;
-    }
-  }
+            var flattened = (0, _utils.flattenComponents)(form.component.components, true); // Create object containing the corresponding HTML element components
 
-  openOauth(settings) {
-    if (!this.root.formio) {
-      console.warn('You must attach a Form API url to your form in order to use OAuth buttons.');
-      return;
-    }
+            var components = {};
 
-    /*eslint-disable camelcase */
-    let params = {
-      response_type: 'code',
-      client_id: settings.clientId,
-      redirect_uri: window.location.origin || `${window.location.protocol}//${window.location.host}`,
-      state: settings.state,
-      scope: settings.scope
-    };
-    /*eslint-enable camelcase */
+            _lodash.default.each(flattened, function (component, key) {
+              var element = form.getComponent(key);
 
-    // Make display optional.
-    if (settings.display) {
-      params.display = settings.display;
-    }
-
-    params = Object.keys(params).map(key => {
-      return `${key}=${encodeURIComponent(params[key])}`;
-    }).join('&');
-
-    const url = `${settings.authURI}?${params}`;
-    const popup = window.open(url, settings.provider, 'width=1020,height=618');
-
-    const interval = setInterval(() => {
-      try {
-        const popupHost = popup.location.host;
-        const currentHost = window.location.host;
-        if (popup && !popup.closed && popupHost === currentHost && popup.location.search) {
-          popup.close();
-          const params = popup.location.search.substr(1).split('&').reduce((params, param) => {
-            const split = param.split('=');
-            params[split[0]] = split[1];
-            return params;
-          }, {});
-          if (params.error) {
-            alert(params.error_description || params.error);
-            this.root.setAlert('danger', params.error_description || params.error);
-            return;
-          }
-          // TODO: check for error response here
-          if (settings.state !== params.state) {
-            this.root.setAlert('danger', 'OAuth state does not match. Please try logging in again.');
-            return;
-          }
-          // Depending on where the settings came from, submit to either the submission endpoint (old) or oauth endpoint (new).
-          let requestPromise = NativePromise.resolve();
-          if (_.has(this, 'root.form.config.oauth') && this.root.form.config.oauth[this.component.oauthProvider]) {
-            params.provider = settings.provider;
-            params.redirectURI = window.location.origin;
-            requestPromise = this.root.formio.makeRequest('oauth', `${this.root.formio.projectUrl}/oauth2`, 'POST', params);
-          }
-          else {
-            const submission = { data: {}, oauth: {} };
-            submission.oauth[settings.provider] = params;
-            submission.oauth[settings.provider].redirectURI = window.location.origin
-              || `${window.location.protocol}//${window.location.host}`;
-            requestPromise = this.root.formio.saveSubmission(submission);
-          }
-          requestPromise.then((result) => {
-              this.root.onSubmit(result, true);
-            })
-            .catch((err) => {
-              this.root.onSubmissionError(err);
+              if (element) {
+                components[key] = element;
+              }
             });
-        }
-      }
-      catch (error) {
-        if (error.name !== 'SecurityError') {
-          this.root.setAlert('danger', error.message || error);
-        }
-      }
-      if (!popup || popup.closed || popup.closed === undefined) {
-        clearInterval(interval);
-      }
-    }, 100);
-  }
 
-  focus() {
-    if (this.refs.button) {
-      this.refs.button.focus();
-    }
-  }
+            this.evaluate(this.component.custom, {
+              form: form,
+              flattened: flattened,
+              components: components
+            });
+            break;
+          }
 
-  triggerReCaptcha() {
-    if (!this.root) {
-      return;
+        case 'url':
+          this.loading = true;
+          this.emit('requestButton', {
+            component: this.component,
+            instance: this
+          });
+          this.emit('requestUrl', {
+            url: this.interpolate(this.component.url),
+            headers: this.component.headers
+          });
+          break;
+
+        case 'reset':
+          this.emit('resetForm');
+          break;
+
+        case 'delete':
+          this.emit('deleteSubmission');
+          break;
+
+        case 'oauth':
+          if (this.root === this) {
+            console.warn('You must add the OAuth button to a form for it to function properly');
+            return;
+          } // Display Alert if OAuth config is missing
+
+
+          if (!this.oauthConfig) {
+            this.root.setAlert('danger', 'OAuth not configured. You must configure oauth for your project before it will work.');
+            break;
+          } // Display Alert if oAuth has an error is missing
+
+
+          if (this.oauthConfig.error) {
+            this.root.setAlert('danger', "The Following Error Has Occured ".concat(this.oauthConfig.error));
+            break;
+          }
+
+          this.openOauth(this.oauthConfig);
+          break;
+      }
     }
-    const recaptchaComponent = this.root.components.find((component) => {
-      return component.component.type === 'recaptcha' &&
-        component.component.eventType === 'buttonClick' &&
-        component.component.buttonKey === this.component.key;
-    });
-    if (recaptchaComponent) {
-      recaptchaComponent.verify(`${this.component.key}Click`);
+  }, {
+    key: "openOauth",
+    value: function openOauth(settings) {
+      var _this2 = this;
+
+      if (!this.root.formio) {
+        console.warn('You must attach a Form API url to your form in order to use OAuth buttons.');
+        return;
+      }
+      /*eslint-disable camelcase */
+
+
+      var params = {
+        response_type: 'code',
+        client_id: settings.clientId,
+        redirect_uri: window.location.origin || "".concat(window.location.protocol, "//").concat(window.location.host),
+        state: settings.state,
+        scope: settings.scope
+      };
+      /*eslint-enable camelcase */
+      // Make display optional.
+
+      if (settings.display) {
+        params.display = settings.display;
+      }
+
+      params = Object.keys(params).map(function (key) {
+        return "".concat(key, "=").concat(encodeURIComponent(params[key]));
+      }).join('&');
+      var url = "".concat(settings.authURI, "?").concat(params);
+      var popup = window.open(url, settings.provider, 'width=1020,height=618');
+      var interval = setInterval(function () {
+        try {
+          var popupHost = popup.location.host;
+          var currentHost = window.location.host;
+
+          if (popup && !popup.closed && popupHost === currentHost && popup.location.search) {
+            popup.close();
+
+            var _params = popup.location.search.substr(1).split('&').reduce(function (params, param) {
+              var split = param.split('=');
+              params[split[0]] = split[1];
+              return params;
+            }, {});
+
+            if (_params.error) {
+              alert(_params.error_description || _params.error);
+
+              _this2.root.setAlert('danger', _params.error_description || _params.error);
+
+              return;
+            } // TODO: check for error response here
+
+
+            if (settings.state !== _params.state) {
+              _this2.root.setAlert('danger', 'OAuth state does not match. Please try logging in again.');
+
+              return;
+            } // Depending on where the settings came from, submit to either the submission endpoint (old) or oauth endpoint (new).
+
+
+            var requestPromise = Promise.resolve();
+
+            if (_lodash.default.has(_this2, 'root.form.config.oauth') && _this2.root.form.config.oauth[_this2.component.oauthProvider]) {
+              _params.provider = settings.provider;
+              _params.redirectURI = window.location.origin;
+              requestPromise = _this2.root.formio.makeRequest('oauth', "".concat(_this2.root.formio.projectUrl, "/oauth2"), 'POST', _params);
+            } else {
+              var submission = {
+                data: {},
+                oauth: {}
+              };
+              submission.oauth[settings.provider] = _params;
+              submission.oauth[settings.provider].redirectURI = window.location.origin || "".concat(window.location.protocol, "//").concat(window.location.host);
+              requestPromise = _this2.root.formio.saveSubmission(submission);
+            }
+
+            requestPromise.then(function (result) {
+              _this2.root.onSubmit(result, true);
+            }).catch(function (err) {
+              _this2.root.onSubmissionError(err);
+            });
+          }
+        } catch (error) {
+          if (error.name !== 'SecurityError') {
+            _this2.root.setAlert('danger', error.message || error);
+          }
+        }
+
+        if (!popup || popup.closed || popup.closed === undefined) {
+          clearInterval(interval);
+        }
+      }, 100);
     }
-  }
-}
+  }, {
+    key: "focus",
+    value: function focus() {
+      if (this.refs.button) {
+        this.refs.button.focus();
+      }
+    }
+  }, {
+    key: "triggerReCaptcha",
+    value: function triggerReCaptcha() {
+      var _this3 = this;
+
+      if (!this.root) {
+        return;
+      }
+
+      var recaptchaComponent = this.root.components.find(function (component) {
+        return component.component.type === 'recaptcha' && component.component.eventType === 'buttonClick' && component.component.buttonKey === _this3.component.key;
+      });
+
+      if (recaptchaComponent) {
+        recaptchaComponent.verify("".concat(this.component.key, "Click"));
+      }
+    }
+  }, {
+    key: "defaultSchema",
+    get: function get() {
+      return ButtonComponent.schema();
+    }
+  }, {
+    key: "inputInfo",
+    get: function get() {
+      var info = _get(_getPrototypeOf(ButtonComponent.prototype), "elementInfo", this).call(this);
+
+      info.type = 'button';
+      info.attr.type = ['submit', 'saveState'].includes(this.component.action) ? 'submit' : 'button';
+      this.component.theme = this.component.theme || 'default';
+      info.attr.class = "btn btn-".concat(this.component.theme);
+
+      if (this.component.size) {
+        info.attr.class += " btn-".concat(this.component.size);
+      }
+
+      if (this.component.block) {
+        info.attr.class += ' btn-block';
+      }
+
+      if (this.component.customClass) {
+        info.attr.class += " ".concat(this.component.customClass);
+      }
+
+      info.content = this.t(this.component.label);
+      return info;
+    }
+  }, {
+    key: "labelInfo",
+    get: function get() {
+      return {
+        hidden: true
+      };
+    }
+  }, {
+    key: "loading",
+    set: function set(loading) {
+      this.setLoading(this.refs.button, loading);
+    }
+  }, {
+    key: "skipInEmail",
+    get: function get() {
+      return true;
+    }
+  }, {
+    key: "emptyValue",
+    get: function get() {
+      return false;
+    }
+  }, {
+    key: "clicked",
+    get: function get() {
+      return this.dataValue;
+    }
+  }, {
+    key: "defaultValue",
+    get: function get() {
+      return false;
+    }
+  }, {
+    key: "className",
+    get: function get() {
+      var className = _get(_getPrototypeOf(ButtonComponent.prototype), "className", this);
+
+      className += ' form-group';
+      return className;
+    }
+  }, {
+    key: "oauthConfig",
+    get: function get() {
+      if (_lodash.default.has(this, 'root.form.config.oauth') && this.component.oauthProvider) {
+        return this.root.form.config.oauth[this.component.oauthProvider];
+      } // Legacy oauth location.
+
+
+      if (this.component.oauth) {
+        return this.component.oauth;
+      }
+
+      return false;
+    }
+  }], [{
+    key: "schema",
+    value: function schema() {
+      for (var _len = arguments.length, extend = new Array(_len), _key = 0; _key < _len; _key++) {
+        extend[_key] = arguments[_key];
+      }
+
+      return _Input.default.schema.apply(_Input.default, [{
+        type: 'button',
+        label: 'Submit',
+        key: 'submit',
+        size: 'md',
+        leftIcon: '',
+        rightIcon: '',
+        block: false,
+        action: 'submit',
+        persistent: false,
+        disableOnInvalid: false,
+        theme: 'primary',
+        dataGridLabel: true
+      }].concat(extend));
+    }
+  }, {
+    key: "builderInfo",
+    get: function get() {
+      return {
+        title: 'Button',
+        group: 'basic',
+        icon: 'stop',
+        documentation: 'http://help.form.io/userguide/#button',
+        weight: 110,
+        schema: ButtonComponent.schema()
+      };
+    }
+  }]);
+
+  return ButtonComponent;
+}(_Field2.default);
+
+exports.default = ButtonComponent;

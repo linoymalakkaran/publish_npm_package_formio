@@ -1,14 +1,17 @@
-import Harness from '../../../test/harness';
-import TableComponent from './Table';
+"use strict";
 
-import {
-  comp1
-} from './fixtures';
+var _harness = _interopRequireDefault(require("../../../test/harness"));
 
-describe('Table Component', () => {
-  it('Should build a Table component', () => {
-    return Harness.testCreate(TableComponent, comp1).then((component) => {
-      Harness.testElements(component, 'input[type="text"]', 6);
+var _Table = _interopRequireDefault(require("./Table"));
+
+var _fixtures = require("./fixtures");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+describe('Table Component', function () {
+  it('Should build a Table component', function () {
+    return _harness.default.testCreate(_Table.default, _fixtures.comp1).then(function (component) {
+      _harness.default.testElements(component, 'input[type="text"]', 6);
     });
   });
 });

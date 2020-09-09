@@ -1,158 +1,142 @@
-import Harness from '../../../test/harness';
-import FormComponent from './Form';
-import { expect } from 'chai';
-import assert from 'power-assert';
+"use strict";
 
-import {
-  comp1,
-  comp3
-} from './fixtures';
-import Webform from '../../Webform';
-import formModalEdit from './fixtures/formModalEdit';
+var _harness = _interopRequireDefault(require("../../../test/harness"));
 
-describe('Form Component', () => {
-  it('Should build a form component', () => {
-    return Harness.testCreate(FormComponent, comp1);
+var _Form = _interopRequireDefault(require("./Form"));
+
+var _chai = require("chai");
+
+var _powerAssert = _interopRequireDefault(require("power-assert"));
+
+var _fixtures = require("./fixtures");
+
+var _Webform = _interopRequireDefault(require("../../Webform"));
+
+var _formModalEdit = _interopRequireDefault(require("./fixtures/formModalEdit"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+describe('Form Component', function () {
+  it('Should build a form component', function () {
+    return _harness.default.testCreate(_Form.default, _fixtures.comp1);
   });
-
-  describe('renderSubForm', () => {
-    let formcmp = null;
-    it('should set sub form parentVisible', done => {
-      Harness.testCreate(FormComponent, comp1)
-        .then(cmp => {
-          formcmp = cmp;
-          formcmp.visible = false;
-          return formcmp.subFormReady;
-        }, done)
-        .then(subForm => {
-          expect(formcmp).to.not.be.null;
-          expect(formcmp.visible).to.be.false;
-          expect(subForm.parentVisible).to.be.false;
-          done();
-        }, done)
-        .catch(done);
-    });
-  });
-
-  describe('set visible', () => {
-    it('should set visible flag on instance', done => {
-      Harness.testCreate(FormComponent, comp1)
-        .then(formcmp => {
-          expect(formcmp._visible).to.be.true;
-          formcmp.visible = false;
-          expect(formcmp._visible).to.be.false;
-          done();
-        }, done)
-        .catch(done);
-    });
-
-    it('should update sub form visibility', done => {
-      let formcmp;
-      Harness.testCreate(FormComponent, comp1)
-        .then(cmp => {
-          formcmp = cmp;
-          return formcmp.subFormReady;
-        }, done)
-        .then(subform => {
-          expect(formcmp.visible).to.be.true;
-          expect(subform.parentVisible).to.be.true;
-          formcmp.visible = false;
-          expect(formcmp.visible).to.be.false;
-          expect(subform.parentVisible).to.be.false;
-          formcmp.visible = true;
-          expect(formcmp.visible).to.be.true;
-          expect(subform.parentVisible).to.be.true;
-          done();
-        }, done)
-        .catch(done);
+  describe('renderSubForm', function () {
+    var formcmp = null;
+    it('should set sub form parentVisible', function (done) {
+      _harness.default.testCreate(_Form.default, _fixtures.comp1).then(function (cmp) {
+        formcmp = cmp;
+        formcmp.visible = false;
+        return formcmp.subFormReady;
+      }, done).then(function (subForm) {
+        (0, _chai.expect)(formcmp).to.not.be.null;
+        (0, _chai.expect)(formcmp.visible).to.be.false;
+        (0, _chai.expect)(subForm.parentVisible).to.be.false;
+        done();
+      }, done).catch(done);
     });
   });
+  describe('set visible', function () {
+    it('should set visible flag on instance', function (done) {
+      _harness.default.testCreate(_Form.default, _fixtures.comp1).then(function (formcmp) {
+        (0, _chai.expect)(formcmp._visible).to.be.true;
+        formcmp.visible = false;
+        (0, _chai.expect)(formcmp._visible).to.be.false;
+        done();
+      }, done).catch(done);
+    });
+    it('should update sub form visibility', function (done) {
+      var formcmp;
 
-  describe('get visible', () => {
-    it('should get visible flag from instance', done => {
-      Harness.testCreate(FormComponent, comp1)
-        .then(formcmp => {
-          expect(formcmp._visible).to.be.true;
-          expect(formcmp.visible).to.be.true;
-          formcmp.visible = false;
-          expect(formcmp.visible).to.be.false;
-          done();
-        }, done)
-        .catch(done);
+      _harness.default.testCreate(_Form.default, _fixtures.comp1).then(function (cmp) {
+        formcmp = cmp;
+        return formcmp.subFormReady;
+      }, done).then(function (subform) {
+        (0, _chai.expect)(formcmp.visible).to.be.true;
+        (0, _chai.expect)(subform.parentVisible).to.be.true;
+        formcmp.visible = false;
+        (0, _chai.expect)(formcmp.visible).to.be.false;
+        (0, _chai.expect)(subform.parentVisible).to.be.false;
+        formcmp.visible = true;
+        (0, _chai.expect)(formcmp.visible).to.be.true;
+        (0, _chai.expect)(subform.parentVisible).to.be.true;
+        done();
+      }, done).catch(done);
     });
   });
-
-  describe('set parentVisible', () => {
-    it('should set parentVisible flag on instance', done => {
-      Harness.testCreate(FormComponent, comp1)
-        .then(formcmp => {
-          expect(formcmp._parentVisible).to.be.true;
-          formcmp.parentVisible = false;
-          expect(formcmp._parentVisible).to.be.false;
-          done();
-        }, done)
-        .catch(done);
-    });
-
-    it('should update sub form visibility', done => {
-      let formcmp;
-      Harness.testCreate(FormComponent, comp1)
-        .then(cmp => {
-          formcmp = cmp;
-          return formcmp.subFormReady;
-        }, done)
-        .then(subform => {
-          expect(formcmp.parentVisible).to.be.true;
-          expect(subform.parentVisible).to.be.true;
-          formcmp.parentVisible = false;
-          expect(formcmp.parentVisible).to.be.false;
-          expect(subform.parentVisible).to.be.false;
-          formcmp.parentVisible = true;
-          expect(formcmp.parentVisible).to.be.true;
-          expect(subform.parentVisible).to.be.true;
-          done();
-        }, done)
-        .catch(done);
+  describe('get visible', function () {
+    it('should get visible flag from instance', function (done) {
+      _harness.default.testCreate(_Form.default, _fixtures.comp1).then(function (formcmp) {
+        (0, _chai.expect)(formcmp._visible).to.be.true;
+        (0, _chai.expect)(formcmp.visible).to.be.true;
+        formcmp.visible = false;
+        (0, _chai.expect)(formcmp.visible).to.be.false;
+        done();
+      }, done).catch(done);
     });
   });
+  describe('set parentVisible', function () {
+    it('should set parentVisible flag on instance', function (done) {
+      _harness.default.testCreate(_Form.default, _fixtures.comp1).then(function (formcmp) {
+        (0, _chai.expect)(formcmp._parentVisible).to.be.true;
+        formcmp.parentVisible = false;
+        (0, _chai.expect)(formcmp._parentVisible).to.be.false;
+        done();
+      }, done).catch(done);
+    });
+    it('should update sub form visibility', function (done) {
+      var formcmp;
 
-  describe('get parentVisible', () => {
-    it('should get parentVisible flag from instance', done => {
-      Harness.testCreate(FormComponent, comp1)
-        .then(formcmp => {
-          expect(formcmp._parentVisible).to.be.true;
-          expect(formcmp.parentVisible).to.be.true;
-          formcmp.parentVisible = false;
-          expect(formcmp.parentVisible).to.be.false;
-          done();
-        }, done)
-        .catch(done);
+      _harness.default.testCreate(_Form.default, _fixtures.comp1).then(function (cmp) {
+        formcmp = cmp;
+        return formcmp.subFormReady;
+      }, done).then(function (subform) {
+        (0, _chai.expect)(formcmp.parentVisible).to.be.true;
+        (0, _chai.expect)(subform.parentVisible).to.be.true;
+        formcmp.parentVisible = false;
+        (0, _chai.expect)(formcmp.parentVisible).to.be.false;
+        (0, _chai.expect)(subform.parentVisible).to.be.false;
+        formcmp.parentVisible = true;
+        (0, _chai.expect)(formcmp.parentVisible).to.be.true;
+        (0, _chai.expect)(subform.parentVisible).to.be.true;
+        done();
+      }, done).catch(done);
     });
   });
-
-  describe('Modal Edit', () => {
-    it('Should render preview when modalEdit', (done) => {
-      const formElement = document.createElement('div');
-      const form = new Webform(formElement);
-      form.setForm(formModalEdit).then(() => {
-        const preview = form.element.querySelector('[ref="openModal"]');
-        assert(preview, 'Should contain element to open a modal window');
+  describe('get parentVisible', function () {
+    it('should get parentVisible flag from instance', function (done) {
+      _harness.default.testCreate(_Form.default, _fixtures.comp1).then(function (formcmp) {
+        (0, _chai.expect)(formcmp._parentVisible).to.be.true;
+        (0, _chai.expect)(formcmp.parentVisible).to.be.true;
+        formcmp.parentVisible = false;
+        (0, _chai.expect)(formcmp.parentVisible).to.be.false;
+        done();
+      }, done).catch(done);
+    });
+  });
+  describe('Modal Edit', function () {
+    it('Should render preview when modalEdit', function (done) {
+      var formElement = document.createElement('div');
+      var form = new _Webform.default(formElement);
+      form.setForm(_formModalEdit.default).then(function () {
+        var preview = form.element.querySelector('[ref="openModal"]');
+        (0, _powerAssert.default)(preview, 'Should contain element to open a modal window');
         done();
       }).catch(done);
     });
   });
 });
-
-describe('Wizard Component', () => {
-  it('Should build a wizard component and disable cancel, next and breadcrumbs', (done) => {
-    Harness.testCreate(FormComponent, comp3, {
-      breadcrumbSettings:
-        { clickable: false },
-      buttonSettings:
-        { showCancel: false, showPrevious: false }
-    }).then(() => {
+describe('Wizard Component', function () {
+  it('Should build a wizard component and disable cancel, next and breadcrumbs', function (done) {
+    _harness.default.testCreate(_Form.default, _fixtures.comp3, {
+      breadcrumbSettings: {
+        clickable: false
+      },
+      buttonSettings: {
+        showCancel: false,
+        showPrevious: false
+      }
+    }).then(function () {
       done();
     });
   });
 });
-

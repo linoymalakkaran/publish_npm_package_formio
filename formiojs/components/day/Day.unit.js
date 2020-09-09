@@ -1,168 +1,197 @@
-import assert from 'power-assert';
+"use strict";
 
-import Harness from '../../../test/harness';
-import DayComponent from './Day';
+var _powerAssert = _interopRequireDefault(require("power-assert"));
 
-import {
-  comp1,
-  comp2,
-  comp3
-} from './fixtures';
+var _harness = _interopRequireDefault(require("../../../test/harness"));
 
-describe('Day Component', () => {
-  it('Should build a day component', () => {
-    return Harness.testCreate(DayComponent, comp1).then((component) => {
-      Harness.testElements(component, 'input[type="number"]', 2);
-      Harness.testElements(component, 'select', 1);
+var _Day = _interopRequireDefault(require("./Day"));
+
+var _fixtures = require("./fixtures");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+describe('Day Component', function () {
+  it('Should build a day component', function () {
+    return _harness.default.testCreate(_Day.default, _fixtures.comp1).then(function (component) {
+      _harness.default.testElements(component, 'input[type="number"]', 2);
+
+      _harness.default.testElements(component, 'select', 1);
     });
   });
+  it('Should change the max day when the month changes', function (done) {
+    _harness.default.testCreate(_Day.default, _fixtures.comp1).then(function (component) {
+      _harness.default.testElements(component, 'option', 13);
 
-  it('Should change the max day when the month changes', (done) => {
-    Harness.testCreate(DayComponent, comp1).then((component) => {
-      Harness.testElements(component, 'option', 13);
-      assert(!!component.refs.year, 'There should be a year');
-      // Set the year to a non-leap year.
+      (0, _powerAssert.default)(!!component.refs.year, 'There should be a year'); // Set the year to a non-leap year.
+
       component.refs.year.value = 2017;
       component.setSelectValue(component.refs.month, '1');
       component.refs.month.dispatchEvent(new Event('input'));
-      assert.equal(component.refs.day.max, '31');
+
+      _powerAssert.default.equal(component.refs.day.max, '31');
 
       component.setSelectValue(component.refs.month, '2');
       component.refs.month.dispatchEvent(new Event('input'));
-      assert.equal(component.refs.day.max, '28');
+
+      _powerAssert.default.equal(component.refs.day.max, '28');
 
       component.setSelectValue(component.refs.month, '3');
       component.refs.month.dispatchEvent(new Event('input'));
-      assert.equal(component.refs.day.max, '31');
+
+      _powerAssert.default.equal(component.refs.day.max, '31');
 
       component.setSelectValue(component.refs.month, '4');
       component.refs.month.dispatchEvent(new Event('input'));
-      assert.equal(component.refs.day.max, '30');
 
-      // Set to a leap year.
+      _powerAssert.default.equal(component.refs.day.max, '30'); // Set to a leap year.
+
+
       component.refs.year.value = 2020;
       component.setSelectValue(component.refs.month, '1');
       component.refs.month.dispatchEvent(new Event('input'));
-      assert.equal(component.refs.day.max, '31');
+
+      _powerAssert.default.equal(component.refs.day.max, '31');
 
       component.setSelectValue(component.refs.month, '2');
       component.refs.month.dispatchEvent(new Event('input'));
-      assert.equal(component.refs.day.max, '29');
+
+      _powerAssert.default.equal(component.refs.day.max, '29');
 
       component.setSelectValue(component.refs.month, '3');
       component.refs.month.dispatchEvent(new Event('input'));
-      assert.equal(component.refs.day.max, '31');
+
+      _powerAssert.default.equal(component.refs.day.max, '31');
 
       component.setSelectValue(component.refs.month, '4');
       component.refs.month.dispatchEvent(new Event('input'));
-      assert.equal(component.refs.day.max, '30');
+
+      _powerAssert.default.equal(component.refs.day.max, '30');
 
       done();
     });
   });
+  it('Should put the month select first', function (done) {
+    _harness.default.testCreate(_Day.default, _fixtures.comp1).then(function (component) {
+      var inputs = _harness.default.testElements(component, '.form-control', 4);
 
-  it('Should put the month select first', (done) => {
-    Harness.testCreate(DayComponent, comp1).then((component) => {
-      const inputs = Harness.testElements(component, '.form-control', 4);
-      assert.equal(inputs[0].id, `${component.component.key}-month`);
-      assert.equal(inputs[1].id, `${component.component.key}-day`);
-      assert.equal(inputs[2].id, `${component.component.key}-year`);
+      _powerAssert.default.equal(inputs[0].id, "".concat(component.component.key, "-month"));
+
+      _powerAssert.default.equal(inputs[1].id, "".concat(component.component.key, "-day"));
+
+      _powerAssert.default.equal(inputs[2].id, "".concat(component.component.key, "-year"));
+
       component.setValue('03/20/2017');
-      assert.equal(component.getValue(), '03/20/2017');
+
+      _powerAssert.default.equal(component.getValue(), '03/20/2017');
+
       done();
     });
   });
+  it('Should put the day select first on configuration', function (done) {
+    _fixtures.comp1.dayFirst = true;
 
-  it('Should put the day select first on configuration', (done) => {
-    comp1.dayFirst = true;
-    Harness.testCreate(DayComponent, comp1).then((component) => {
-      const inputs = Harness.testElements(component, '.form-control', 4);
-      assert.equal(inputs[0].id, `${component.component.key}-day`);
-      assert.equal(inputs[1].id, `${component.component.key}-month`);
-      assert.equal(inputs[2].id, `${component.component.key}-year`);
+    _harness.default.testCreate(_Day.default, _fixtures.comp1).then(function (component) {
+      var inputs = _harness.default.testElements(component, '.form-control', 4);
+
+      _powerAssert.default.equal(inputs[0].id, "".concat(component.component.key, "-day"));
+
+      _powerAssert.default.equal(inputs[1].id, "".concat(component.component.key, "-month"));
+
+      _powerAssert.default.equal(inputs[2].id, "".concat(component.component.key, "-year"));
+
       component.setValue('20/03/2017');
-      assert.equal(component.getValue(), '20/03/2017');
+
+      _powerAssert.default.equal(component.getValue(), '20/03/2017');
+
       done();
     });
   });
+  it('Should not allow invalid days', function (done) {
+    _fixtures.comp1.dayFirst = false;
 
-  it('Should not allow invalid days', (done) => {
-    comp1.dayFirst = false;
-    Harness.testCreate(DayComponent, comp1).then((component) => {
-      component.on('componentError', (err) => {
-        assert.equal(err.message, 'Date is not a valid day.');
-        assert.equal(err.component.key, 'date');
+    _harness.default.testCreate(_Day.default, _fixtures.comp1).then(function (component) {
+      component.on('componentError', function (err) {
+        _powerAssert.default.equal(err.message, 'Date is not a valid day.');
+
+        _powerAssert.default.equal(err.component.key, 'date');
+
         done();
       });
-
-      component.on('componentChange', () => {
+      component.on('componentChange', function () {
         component.checkValidity();
       });
-
       component.setValue('3/40/2017');
     });
   });
+  it('Should ignore invalid months and use zeros as default', function (done) {
+    _fixtures.comp1.dayFirst = false;
 
-  it('Should ignore invalid months and use zeros as default', (done) => {
-    comp1.dayFirst = false;
-
-    Harness.testCreate(DayComponent, comp1).then((component) => {
+    _harness.default.testCreate(_Day.default, _fixtures.comp1).then(function (component) {
       component.setValue('15/20/2017');
-      assert.equal(component.getValue(), '00/20/2017');
+
+      _powerAssert.default.equal(component.getValue(), '00/20/2017');
+
       done();
     });
   });
-
-  it('Should keep day value when switching months', (done) => {
-    Harness.testCreate(DayComponent, comp1).then((component) => {
+  it('Should keep day value when switching months', function (done) {
+    _harness.default.testCreate(_Day.default, _fixtures.comp1).then(function (component) {
       component.setValue('01/05/2018');
-      assert.equal(component.getValue(), '01/05/2018');
-      component.on('componentChange', () => {
-        assert.equal(component.getValue(), '02/05/2018');
+
+      _powerAssert.default.equal(component.getValue(), '01/05/2018');
+
+      component.on('componentChange', function () {
+        _powerAssert.default.equal(component.getValue(), '02/05/2018');
+
         done();
       });
       component.refs.month.value = 2;
       component.refs.month.dispatchEvent(new Event('input'));
     });
   });
-
-  it('Should adjust day value when day is great then maxDay of month', (done) => {
-    Harness.testCreate(DayComponent, comp1).then((component) => {
+  it('Should adjust day value when day is great then maxDay of month', function (done) {
+    _harness.default.testCreate(_Day.default, _fixtures.comp1).then(function (component) {
       component.setValue('01/31/2018');
-      assert.equal(component.getValue(), '01/31/2018');
-      component.on('componentChange', () => {
-        assert.equal(component.getValue(), '02/28/2018');
+
+      _powerAssert.default.equal(component.getValue(), '01/31/2018');
+
+      component.on('componentChange', function () {
+        _powerAssert.default.equal(component.getValue(), '02/28/2018');
+
         done();
       });
       component.refs.month.value = 2;
       component.refs.month.dispatchEvent(new Event('input'));
     });
   });
-
-  it('Should validate required fields', (done) => {
-    Harness.testCreate(DayComponent, comp2).then((component) => {
+  it('Should validate required fields', function (done) {
+    _harness.default.testCreate(_Day.default, _fixtures.comp2).then(function (component) {
       component.pristine = false;
-      const valid = () => component.checkValidity(component.data, true);
-      const tests = {
+
+      var valid = function valid() {
+        return component.checkValidity(component.data, true);
+      };
+
+      var tests = {
         '12/18/2018': true,
         '12/00/0000': false,
         '00/18/0000': false,
         '00/00/2018': false,
-        '01/05/2018': true,
+        '01/05/2018': true
       };
 
-      for (const v in tests) {
+      for (var v in tests) {
         component.setValue(v);
-        assert.equal(valid(), tests[v]);
+
+        _powerAssert.default.equal(valid(), tests[v]);
       }
 
       done();
     });
   });
-
-  it('should normalize min-max dates on dayFirst', () => {
-    Harness.testCreate(DayComponent, comp3).then((component) => {
-      assert.equal(component.normalizeMinMaxDates(), ['04/02/2020', '09/02/2020']);
+  it('should normalize min-max dates on dayFirst', function () {
+    _harness.default.testCreate(_Day.default, _fixtures.comp3).then(function (component) {
+      _powerAssert.default.equal(component.normalizeMinMaxDates(), ['04/02/2020', '09/02/2020']);
     });
   });
 });

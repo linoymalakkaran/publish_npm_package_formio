@@ -1,4 +1,10 @@
-export default {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = {
   'label': 'Currency',
   'mask': false,
   'spellcheck': true,
@@ -16,3 +22,4 @@ export default {
   'delimiter': true,
   'defaultValue': [null]
 };
+exports.default = _default;

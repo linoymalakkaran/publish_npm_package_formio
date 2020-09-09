@@ -1,4 +1,10 @@
-export default {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = {
   'label': 'Tree',
   'tableView': true,
   'calculateServer': false,
@@ -20,4 +26,4 @@ export default {
     'input': true
   }]
 };
-
+exports.default = _default;

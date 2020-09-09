@@ -1,54 +1,67 @@
-import assert from 'power-assert';
+"use strict";
 
-import Harness from '../../../test/harness';
-import RadioComponent from './Radio';
+require("core-js/modules/es.array.for-each");
 
-import {
-  comp1,
-  comp2,
-  comp3
-} from './fixtures';
+require("core-js/modules/es.array.index-of");
 
-describe('Radio Component', () => {
-  it('Should build a radio component', () => {
-    return Harness.testCreate(RadioComponent, comp1).then((component) => {
-      Harness.testElements(component, 'input[type="radio"]', 4);
-      Harness.testElements(component, 'span', 4);
+require("core-js/modules/web.dom-collections.for-each");
+
+var _powerAssert = _interopRequireDefault(require("power-assert"));
+
+var _harness = _interopRequireDefault(require("../../../test/harness"));
+
+var _Radio = _interopRequireDefault(require("./Radio"));
+
+var _fixtures = require("./fixtures");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+describe('Radio Component', function () {
+  it('Should build a radio component', function () {
+    return _harness.default.testCreate(_Radio.default, _fixtures.comp1).then(function (component) {
+      _harness.default.testElements(component, 'input[type="radio"]', 4);
+
+      _harness.default.testElements(component, 'span', 4);
     });
   });
+  it('Should return correct string values if storage type is Number', function () {
+    return _harness.default.testCreate(_Radio.default, _fixtures.comp2).then(function (component) {
+      _powerAssert.default.equal(component.getValueAsString(1), 'one');
 
-  it('Should return correct string values if storage type is Number', () => {
-    return Harness.testCreate(RadioComponent, comp2).then((component) => {
-      assert.equal(component.getValueAsString(1), 'one');
-      assert.equal(component.getValueAsString(2), 'two');
+      _powerAssert.default.equal(component.getValueAsString(2), 'two');
     });
   });
-
-  it('Should save checked value after redrawing if storage type is Number', (done) => {
-    Harness.testCreate(RadioComponent, comp3).then((component) => {
+  it('Should save checked value after redrawing if storage type is Number', function (done) {
+    _harness.default.testCreate(_Radio.default, _fixtures.comp3).then(function (component) {
       component.setValue(22);
       component.redraw();
+      setTimeout(function () {
+        _powerAssert.default.equal(component.refs.input[0].checked, false);
 
-      setTimeout(()=>{
-        assert.equal(component.refs.input[0].checked, false);
-        assert.equal(component.refs.input[1].value, '22');
-        assert.equal(component.refs.input[1].checked, true);
-        assert.equal(component.refs.input[2].checked, false);
+        _powerAssert.default.equal(component.refs.input[1].value, '22');
+
+        _powerAssert.default.equal(component.refs.input[1].checked, true);
+
+        _powerAssert.default.equal(component.refs.input[2].checked, false);
+
         done();
       }, 700);
     });
   });
-
-  it('Span should have correct text label', () => {
-    return Harness.testCreate(RadioComponent, comp1).then((component) => {
-      component.element.querySelectorAll('input').forEach((input) => {
-        assert(input.getAttribute('class').indexOf('form-check-input') !== -1, 'No form-check-input on radios.');
+  it('Span should have correct text label', function () {
+    return _harness.default.testCreate(_Radio.default, _fixtures.comp1).then(function (component) {
+      component.element.querySelectorAll('input').forEach(function (input) {
+        (0, _powerAssert.default)(input.getAttribute('class').indexOf('form-check-input') !== -1, 'No form-check-input on radios.');
       });
-      const spans = component.element.querySelectorAll('span');
-      assert.equal(spans[0].innerHTML, 'Red');
-      assert.equal(spans[1].innerHTML, 'Green');
-      assert.equal(spans[2].innerHTML, 'Blue');
-      assert.equal(spans[3].innerHTML, 'Yellow');
+      var spans = component.element.querySelectorAll('span');
+
+      _powerAssert.default.equal(spans[0].innerHTML, 'Red');
+
+      _powerAssert.default.equal(spans[1].innerHTML, 'Green');
+
+      _powerAssert.default.equal(spans[2].innerHTML, 'Blue');
+
+      _powerAssert.default.equal(spans[3].innerHTML, 'Yellow');
     });
   });
 });

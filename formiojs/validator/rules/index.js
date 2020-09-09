@@ -1,47 +1,70 @@
-const custom = require('./Custom');
-const date = require('./Date');
-const day = require('./Day');
-const email = require('./Email');
-const json = require('./JSON');
-const mask = require('./Mask');
-const max = require('./Max');
-const maxDate = require('./MaxDate');
-const maxLength = require('./MaxLength');
-const maxWords = require('./MaxWords');
-const min = require('./Min');
-const minDate = require('./MinDate');
-const minLength = require('./MinLength');
-const minWords = require('./MinWords');
-const pattern = require('./Pattern');
-const required = require('./Required');
-const select = require('./Select');
-const unique = require('./Unique');
-const url = require('./Url');
-const minYear = require('./MinYear');
-const maxYear = require('./MaxYear');
-const time = require('./Time');
+"use strict";
+
+var custom = require('./Custom');
+
+var date = require('./Date');
+
+var day = require('./Day');
+
+var email = require('./Email');
+
+var json = require('./JSON');
+
+var mask = require('./Mask');
+
+var max = require('./Max');
+
+var maxDate = require('./MaxDate');
+
+var maxLength = require('./MaxLength');
+
+var maxWords = require('./MaxWords');
+
+var min = require('./Min');
+
+var minDate = require('./MinDate');
+
+var minLength = require('./MinLength');
+
+var minWords = require('./MinWords');
+
+var pattern = require('./Pattern');
+
+var required = require('./Required');
+
+var select = require('./Select');
+
+var unique = require('./Unique');
+
+var url = require('./Url');
+
+var minYear = require('./MinYear');
+
+var maxYear = require('./MaxYear');
+
+var time = require('./Time');
 
 module.exports = {
-  custom,
-  date,
-  day,
-  email,
-  json,
-  mask,
-  max,
-  maxDate,
-  maxLength,
-  maxWords,
-  min,
-  minDate,
-  minLength,
-  minWords,
-  pattern,
-  required,
-  select,
-  unique,
-  url,
-  minYear,
-  maxYear,
-  time,
+  custom: custom,
+  date: date,
+  day: day,
+  email: email,
+  json: json,
+  mask: mask,
+  max: max,
+  maxDate: maxDate,
+  maxLength: maxLength,
+  maxWords: maxWords,
+  min: min,
+  minDate: minDate,
+  minLength: minLength,
+  minWords: minWords,
+  pattern: pattern,
+  required: required,
+  select: select,
+  unique: unique,
+  url: url,
+  minYear: minYear,
+  maxYear: maxYear,
+  time: time
 };

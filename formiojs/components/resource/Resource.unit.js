@@ -1,14 +1,18 @@
-import Harness from '../../../test/harness';
-import ResourceComponent from './Resource';
+"use strict";
 
-import {
-  comp1
-} from './fixtures';
+var _harness = _interopRequireDefault(require("../../../test/harness"));
 
-describe('Resource Component', () => {
-  it('Should build a resource component', (done) => {
-    Harness.testCreate(ResourceComponent, comp1).then((component) => {
-      Harness.testElements(component, 'select', 1);
+var _Resource = _interopRequireDefault(require("./Resource"));
+
+var _fixtures = require("./fixtures");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+describe('Resource Component', function () {
+  it('Should build a resource component', function (done) {
+    _harness.default.testCreate(_Resource.default, _fixtures.comp1).then(function (component) {
+      _harness.default.testElements(component, 'select', 1);
+
       done();
     });
   });

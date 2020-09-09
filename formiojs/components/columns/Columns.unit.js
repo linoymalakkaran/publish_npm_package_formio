@@ -1,14 +1,17 @@
-import Harness from '../../../test/harness';
-import ColumnsComponent from './Columns';
+"use strict";
 
-import {
-  comp1
-} from './fixtures';
+var _harness = _interopRequireDefault(require("../../../test/harness"));
 
-describe('Columns Component', () => {
-  it('Should build a columns component', () => {
-    return Harness.testCreate(ColumnsComponent, comp1).then((component) => {
-      Harness.testElements(component, 'input[type="text"]', 2);
+var _Columns = _interopRequireDefault(require("./Columns"));
+
+var _fixtures = require("./fixtures");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+describe('Columns Component', function () {
+  it('Should build a columns component', function () {
+    return _harness.default.testCreate(_Columns.default, _fixtures.comp1).then(function (component) {
+      _harness.default.testElements(component, 'input[type="text"]', 2);
     });
   });
 });

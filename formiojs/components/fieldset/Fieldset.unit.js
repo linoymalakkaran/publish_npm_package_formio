@@ -1,14 +1,17 @@
-import Harness from '../../../test/harness';
-import FieldsetComponent from './Fieldset';
+"use strict";
 
-import {
-  comp1
-} from './fixtures';
+var _harness = _interopRequireDefault(require("../../../test/harness"));
 
-describe('Fieldset Component', () => {
-  it('Should build a fieldset component', () => {
-    return Harness.testCreate(FieldsetComponent, comp1).then((component) => {
-      Harness.testElements(component, 'input[type="text"]', 2);
+var _Fieldset = _interopRequireDefault(require("./Fieldset"));
+
+var _fixtures = require("./fixtures");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+describe('Fieldset Component', function () {
+  it('Should build a fieldset component', function () {
+    return _harness.default.testCreate(_Fieldset.default, _fixtures.comp1).then(function (component) {
+      _harness.default.testElements(component, 'input[type="text"]', 2);
     });
   });
 });

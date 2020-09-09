@@ -1,31 +1,45 @@
-import assert from 'power-assert';
+"use strict";
 
-import Harness from '../../../test/harness';
-import { flattenComponents } from '../../utils/formUtils';
-import PanelComponent from './Panel';
-import panelEditForm from './Panel.form';
+require("core-js/modules/es.array.every");
 
-import {
-  comp1
-} from './fixtures';
+require("core-js/modules/es.array.includes");
 
-describe('Panel Component', () => {
-  it('Should build a panel component', () => {
-    return Harness.testCreate(PanelComponent, comp1).then((component) => {
-      Harness.testElements(component, 'input[type="text"]', 2);
+require("core-js/modules/es.array.map");
+
+require("core-js/modules/es.object.keys");
+
+require("core-js/modules/es.string.includes");
+
+var _powerAssert = _interopRequireDefault(require("power-assert"));
+
+var _harness = _interopRequireDefault(require("../../../test/harness"));
+
+var _formUtils = require("../../utils/formUtils");
+
+var _Panel = _interopRequireDefault(require("./Panel"));
+
+var _Panel2 = _interopRequireDefault(require("./Panel.form"));
+
+var _fixtures = require("./fixtures");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+describe('Panel Component', function () {
+  it('Should build a panel component', function () {
+    return _harness.default.testCreate(_Panel.default, _fixtures.comp1).then(function (component) {
+      _harness.default.testElements(component, 'input[type="text"]', 2);
     });
   });
-
-  describe('Edit Form', () => {
-    it('should include components for important settings', () => {
-      const components = flattenComponents(panelEditForm().components);
-      const keys = Object.keys(components).map(path => components[path].key);
-      const settings = [
-        'breadcrumb',
-        'breadcrumbClickable'
-      ];
-
-      assert(settings.every(s => keys.includes(s)));
+  describe('Edit Form', function () {
+    it('should include components for important settings', function () {
+      var components = (0, _formUtils.flattenComponents)((0, _Panel2.default)().components);
+      var keys = Object.keys(components).map(function (path) {
+        return components[path].key;
+      });
+      var settings = ['breadcrumb', 'breadcrumbClickable'];
+      (0, _powerAssert.default)(settings.every(function (s) {
+        return keys.includes(s);
+      }));
     });
   });
 });

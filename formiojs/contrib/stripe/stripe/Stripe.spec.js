@@ -1,12 +1,9 @@
-import Harness from '../../../../test/harness';
-import StripeComponent from './Stripe';
+"use strict";
 
-import {
-  comp1
-} from './fixtures';
+var _harness = _interopRequireDefault(require("../../../../test/harness"));
 
-// describe('Stripe Component', () => {
-//   it('Should build an stripe component', () => {
-//     return Harness.testCreate(StripeComponent, comp1);
-//   });
-// });
+var _Stripe = _interopRequireDefault(require("./Stripe"));
+
+var _fixtures = require("./fixtures");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
