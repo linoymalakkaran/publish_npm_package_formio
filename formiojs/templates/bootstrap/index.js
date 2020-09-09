@@ -139,6 +139,8 @@ var _wizardNav = _interopRequireDefault(require("./wizardNav"));
 
 var _cssClasses = _interopRequireDefault(require("./cssClasses"));
 
+var _breadCrumbsTlp =  _interopRequireDefault(require("./breadCrumbsTlp"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -218,7 +220,8 @@ var _default = _objectSpread(_objectSpread({
   well: _well.default,
   wizard: _wizard.default,
   wizardHeader: _wizardHeader.default,
-  wizardNav: _wizardNav.default
+  wizardNav: _wizardNav.default,
+  breadCrumbsTlp: _breadCrumbsTlp.default
 });
 
 exports.default = _default;

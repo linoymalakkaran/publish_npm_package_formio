@@ -1,6 +1,6 @@
 {
   "name": "formio-adports",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "formio-customisation",
   "main": "index.js",
   "scripts": {

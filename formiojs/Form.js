@@ -264,13 +264,53 @@ var Form = /*#__PURE__*/function (_Element) {
       if (this.display === display && this.instance) {
         return _nativePromiseOnly.default.resolve(this.instance);
       }
-
+debugger;
+      //set default breadcrumbs template -- added by Linoy
+      if(display === "wizard"){
+        let breadCrumbsTlpToSet = _templates.default.bootstrap.breadCrumbsTlp.form()['defaultTpl'];
+        this._form.breadCrumbstemplate = breadCrumbsTlpToSet;
+      }
+      
       this.form.display = display;
       this.instance.destroy();
       this.instance = this.create(display);
       return this.setForm(this.form);
     }
   }, {
+    //added new fn by Linoy
+    key: "setBreadCrumbsDisplay",
+
+    /**
+     * Changes the display of the form.
+     *
+     * @param {string} display - The display to set this form. Either "wizard", "form", or "pdf"
+     * @return {Promise<T>}
+     */
+    value: function setBreadCrumbsDisplay(display, selectedBreadCrumbsTpl) {
+      debugger;
+      if (this.display === display && this.instance) {
+        return _nativePromiseOnly.default.resolve(this.instance);
+      }
+      
+      if(display === "wizard"){
+        let breadCrumbsTlpToSet = "";
+        if(selectedBreadCrumbsTpl && selectedBreadCrumbsTpl.type === 'object'){
+           breadCrumbsTlpToSet = _templates.default.bootstrap.breadCrumbsTlp.form()[selectedBreadCrumbsTpl.tplName];
+        }else{
+          breadCrumbsTlpToSet = selectedBreadCrumbsTpl.tplHtml;
+        }
+        if(!breadCrumbsTlpToSet){
+          breadCrumbsTlpToSet = _templates.default.bootstrap.breadCrumbsTlp.form()['defaultTpl'];
+        }
+        this._form.breadCrumbstemplate = breadCrumbsTlpToSet;
+      }
+
+      this.form.display = display;
+      this.instance.destroy();
+      this.instance = this.create(display);
+      return this.setForm(this.form);
+    }
+  },{
     key: "empty",
     value: function empty() {
       if (this.element) {
