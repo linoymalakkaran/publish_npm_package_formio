@@ -1,17 +1,13 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-var _default = {
+export default {
   'multiple': true,
   'conditional': {
     'eq': '',
     'when': null,
     'show': ''
   },
-  'tags': [],
+  'tags': [
+
+  ],
   'type': 'number',
   'validate': {
     'custom': '',
@@ -34,4 +30,3 @@ var _default = {
   'tableView': true,
   'input': true
 };
-exports.default = _default;

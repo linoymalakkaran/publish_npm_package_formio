@@ -1,17 +1,14 @@
-"use strict";
+import Harness from '../../../test/harness';
+import PasswordComponent from './Password';
 
-var _harness = _interopRequireDefault(require("../../../test/harness"));
+import {
+  comp1
+} from './fixtures';
 
-var _Password = _interopRequireDefault(require("./Password"));
-
-var _fixtures = require("./fixtures");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-describe('Password Component', function () {
-  it('Should build a password component', function () {
-    return _harness.default.testCreate(_Password.default, _fixtures.comp1).then(function (component) {
-      _harness.default.testElements(component, 'input[type="password"]', 1);
+describe('Password Component', () => {
+  it('Should build a password component', () => {
+    return Harness.testCreate(PasswordComponent, comp1).then((component) => {
+      Harness.testElements(component, 'input[type="password"]', 1);
     });
   });
 });

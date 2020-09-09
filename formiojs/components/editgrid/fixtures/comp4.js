@@ -1,10 +1,4 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-var _default = {
+export default {
   'label': 'Edit Grid',
   'tableView': false,
   'key': 'editGrid',
@@ -26,4 +20,4 @@ var _default = {
     }
   }]
 };
-exports.default = _default;
+

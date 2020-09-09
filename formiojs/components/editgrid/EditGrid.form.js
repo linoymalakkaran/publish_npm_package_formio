@@ -1,42 +1,29 @@
-"use strict";
+import baseEditForm from '../_classes/component/Component.form';
 
-require("core-js/modules/es.array.concat");
+import EditGridEditData from './editForm/EditGrid.edit.data';
+import EditGridEditDisplay from './editForm/EditGrid.edit.display';
+import EditGridEditTemplates from './editForm/EditGrid.edit.templates';
+import EditGridEditValidation from './editForm/EditGrid.edit.validation';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _default;
-
-var _Component = _interopRequireDefault(require("../_classes/component/Component.form"));
-
-var _EditGridEdit = _interopRequireDefault(require("./editForm/EditGrid.edit.data"));
-
-var _EditGridEdit2 = _interopRequireDefault(require("./editForm/EditGrid.edit.display"));
-
-var _EditGridEdit3 = _interopRequireDefault(require("./editForm/EditGrid.edit.templates"));
-
-var _EditGridEdit4 = _interopRequireDefault(require("./editForm/EditGrid.edit.validation"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _default() {
-  for (var _len = arguments.length, extend = new Array(_len), _key = 0; _key < _len; _key++) {
-    extend[_key] = arguments[_key];
-  }
-
-  return _Component.default.apply(void 0, [[{
-    label: 'Templates',
-    key: 'templates',
-    weight: 5,
-    components: _EditGridEdit3.default
-  }, {
-    key: 'display',
-    components: _EditGridEdit2.default
-  }, {
-    key: 'data',
-    components: _EditGridEdit.default
-  }, {
-    key: 'validation',
-    components: _EditGridEdit4.default
-  }]].concat(extend));
+export default function(...extend) {
+  return baseEditForm([
+    {
+      label: 'Templates',
+      key: 'templates',
+      weight: 5,
+      components: EditGridEditTemplates
+    },
+    {
+      key: 'display',
+      components: EditGridEditDisplay,
+    },
+    {
+      key: 'data',
+      components: EditGridEditData,
+    },
+    {
+      key: 'validation',
+      components: EditGridEditValidation
+    }
+  ], ...extend);
 }

@@ -1,10 +1,4 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-var _default = {
+export default {
   'input': true,
   'tableView': true,
   'inputType': 'text',
@@ -31,6 +25,7 @@ var _default = {
   'type': 'currency',
   'requireDecimal': true,
   'delimiter': true,
-  'tags': []
+  'tags': [
+
+  ]
 };
-exports.default = _default;

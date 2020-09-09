@@ -1,10 +1,4 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-var _default = {
+export default {
   'label': 'Text Field',
   'showWordCount': true,
   'tableView': true,
@@ -15,4 +9,3 @@ var _default = {
   'type': 'textfield',
   'input': true
 };
-exports.default = _default;

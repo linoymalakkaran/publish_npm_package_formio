@@ -1,22 +1,11 @@
-"use strict";
+import edit from './edit.ejs';
+import view from './view.ejs';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _edit = _interopRequireDefault(require("./edit.ejs"));
-
-var _view = _interopRequireDefault(require("./view.ejs"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var _default = {
+export default {
   treeView: {
-    form: _view.default
+    form: view,
   },
   treeEdit: {
-    form: _edit.default
+    form: edit
   }
 };
-exports.default = _default;

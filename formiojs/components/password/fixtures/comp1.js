@@ -1,10 +1,4 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-var _default = {
+export default {
   'input': true,
   'tableView': false,
   'inputType': 'password',
@@ -16,7 +10,9 @@ var _default = {
   'protected': true,
   'persistent': true,
   'type': 'password',
-  'tags': [],
+  'tags': [
+
+  ],
   'conditional': {
     'show': '',
     'when': null,
@@ -24,4 +20,3 @@ var _default = {
   },
   'isNew': false
 };
-exports.default = _default;

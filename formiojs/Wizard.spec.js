@@ -1,46 +1,31 @@
-"use strict";
+import each from 'lodash/each';
+import { expect } from 'chai';
 
-var _each = _interopRequireDefault(require("lodash/each"));
+import WizardTests from '../test/wizards';
+import Wizard from './Wizard';
 
-var _chai = require("chai");
-
-var _wizards = _interopRequireDefault(require("../test/wizards"));
-
-var _Wizard = _interopRequireDefault(require("./Wizard"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-describe('Wizard Component', function () {
-  describe('getPreviousPage', function () {
-    it('should return previous page number or zero', function () {
-      var getPreviousPage = _Wizard.default.prototype.getPreviousPage;
-      (0, _chai.expect)(getPreviousPage.call({
-        page: 3
-      })).to.equal(2);
-      (0, _chai.expect)(getPreviousPage.call({
-        page: 9
-      })).to.equal(8);
-      (0, _chai.expect)(getPreviousPage.call({
-        page: 199
-      })).to.equal(198);
-      (0, _chai.expect)(getPreviousPage.call({
-        page: 1
-      })).to.equal(0);
-      (0, _chai.expect)(getPreviousPage.call({
-        page: 0
-      })).to.equal(0);
+describe('Wizard Component', () => {
+  describe('getPreviousPage', () => {
+    it('should return previous page number or zero', () => {
+      const { getPreviousPage } = Wizard.prototype;
+      expect(getPreviousPage.call({ page: 3 })).to.equal(2);
+      expect(getPreviousPage.call({ page: 9 })).to.equal(8);
+      expect(getPreviousPage.call({ page: 199 })).to.equal(198);
+      expect(getPreviousPage.call({ page: 1 })).to.equal(0);
+      expect(getPreviousPage.call({ page: 0 })).to.equal(0);
     });
   });
 });
-describe('WizardRenderer tests', function () {
-  (0, _each.default)(_wizards.default, function (wizardTest) {
-    (0, _each.default)(wizardTest.tests, function (wizardTestTest, title) {
-      it(title, function (done) {
-        var wizardElement = document.createElement('div');
-        var wizard = new _Wizard.default(wizardElement);
-        wizard.setForm(wizardTest.form).then(function () {
+
+describe('WizardRenderer tests', () => {
+  each(WizardTests, (wizardTest) => {
+    each(wizardTest.tests, (wizardTestTest, title) => {
+      it(title, (done) => {
+        const wizardElement = document.createElement('div');
+        const wizard = new Wizard(wizardElement);
+        wizard.setForm(wizardTest.form).then(() => {
           return wizardTestTest(wizard, done);
-        }).catch(function (error) {
+        }).catch((error) => {
           done(error);
         });
       });

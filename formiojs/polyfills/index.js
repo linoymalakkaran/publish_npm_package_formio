@@ -1,5 +1,2 @@
-"use strict";
-
-require("custom-event-polyfill");
-
-require("./ElementPolyfill");
+import 'custom-event-polyfill';
+import './ElementPolyfill';

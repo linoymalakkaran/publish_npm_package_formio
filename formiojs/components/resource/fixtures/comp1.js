@@ -1,16 +1,12 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-var _default = {
+export default {
   'conditional': {
     'eq': '',
     'when': null,
     'show': ''
   },
-  'tags': [],
+  'tags': [
+
+  ],
   'type': 'resource',
   'defaultPermission': '',
   'validate': {
@@ -32,4 +28,3 @@ var _default = {
   'tableView': true,
   'input': true
 };
-exports.default = _default;

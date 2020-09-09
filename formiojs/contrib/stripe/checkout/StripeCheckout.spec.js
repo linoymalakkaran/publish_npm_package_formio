@@ -1,9 +1,12 @@
-"use strict";
+import Harness from '../../../../test/harness';
+import StripeCheckoutComponent from './StripeCheckout';
 
-var _harness = _interopRequireDefault(require("../../../../test/harness"));
+import {
+  comp1
+} from './fixtures';
 
-var _StripeCheckout = _interopRequireDefault(require("./StripeCheckout"));
-
-var _fixtures = require("./fixtures");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+// describe('StripeCheckout Component', () => {
+//   it('Should build an stripeCheckout component', () => {
+//     Harness.testCreate(StripeCheckoutComponent, comp1);
+//   });
+// });

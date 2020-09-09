@@ -1,10 +1,4 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-var _default = {
+export default {
   'input': true,
   'tableView': true,
   'label': 'Location',
@@ -19,9 +13,11 @@ var _default = {
     'gmapId': '',
     'region': '',
     'key': '',
-    'autocompleteOptions': {
-      'componentRestrictions': {
-        'country': ['']
+    'autocompleteOptions' : {
+      'componentRestrictions' : {
+        'country' : [
+          ''
+        ]
       }
     }
   },
@@ -29,11 +25,11 @@ var _default = {
     'required': false
   },
   'type': 'location',
-  'tags': [],
+  'tags': [
+  ],
   'conditional': {
     'show': '',
     'when': null,
     'eq': ''
   }
 };
-exports.default = _default;

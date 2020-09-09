@@ -1,15 +1,12 @@
-"use strict";
+import Harness from '../../../test/harness';
+import AddressComponent from './Address';
 
-var _harness = _interopRequireDefault(require("../../../test/harness"));
+import {
+  comp1
+} from './fixtures';
 
-var _Address = _interopRequireDefault(require("./Address"));
-
-var _fixtures = require("./fixtures");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-describe('Address Component', function () {
-  it('Should build an address component', function () {
-    return _harness.default.testCreate(_Address.default, _fixtures.comp1);
+describe('Address Component', () => {
+  it('Should build an address component', () => {
+    return Harness.testCreate(AddressComponent, comp1);
   });
 });

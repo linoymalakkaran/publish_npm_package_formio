@@ -1,10 +1,4 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-var _default = {
+export default {
   'conditional': {
     'eq': '',
     'when': null,
@@ -31,28 +25,36 @@ var _default = {
     'resource': '',
     'url': '',
     'json': '',
-    'values': [{
-      'label': 'Red',
-      'value': 'red'
-    }, {
-      'label': 'Blue',
-      'value': 'blue'
-    }, {
-      'label': 'Green',
-      'value': 'green'
-    }, {
-      'label': 'Yellow',
-      'value': 'yellow'
-    }, {
-      'label': 'Purple',
-      'value': 'purple'
-    }, {
-      'label': 'Orange',
-      'value': 'orange'
-    }, {
-      'label': 'Black',
-      'value': 'black'
-    }]
+    'values': [
+      {
+        'label': 'Red',
+        'value': 'red'
+      },
+      {
+        'label': 'Blue',
+        'value': 'blue'
+      },
+      {
+        'label': 'Green',
+        'value': 'green'
+      },
+      {
+        'label': 'Yellow',
+        'value': 'yellow'
+      },
+      {
+        'label': 'Purple',
+        'value': 'purple'
+      },
+      {
+        'label': 'Orange',
+        'value': 'orange'
+      },
+      {
+        'label': 'Black',
+        'value': 'black'
+      }
+    ]
   },
   'placeholder': 'Enter your favorite color',
   'key': 'favoriteColor',
@@ -60,4 +62,3 @@ var _default = {
   'tableView': true,
   'input': true
 };
-exports.default = _default;

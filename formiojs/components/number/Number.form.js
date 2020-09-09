@@ -1,35 +1,22 @@
-"use strict";
+import textEditForm from '../textfield/TextField.form';
 
-require("core-js/modules/es.array.concat");
+import NumberEditDisplay from './editForm/Number.edit.display';
+import NumberEditData from './editForm/Number.edit.data';
+import NumberEditValidation from './editForm/Number.edit.validation';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = _default;
-
-var _TextField = _interopRequireDefault(require("../textfield/TextField.form"));
-
-var _NumberEdit = _interopRequireDefault(require("./editForm/Number.edit.display"));
-
-var _NumberEdit2 = _interopRequireDefault(require("./editForm/Number.edit.data"));
-
-var _NumberEdit3 = _interopRequireDefault(require("./editForm/Number.edit.validation"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _default() {
-  for (var _len = arguments.length, extend = new Array(_len), _key = 0; _key < _len; _key++) {
-    extend[_key] = arguments[_key];
-  }
-
-  return _TextField.default.apply(void 0, [[{
-    key: 'display',
-    components: _NumberEdit.default
-  }, {
-    key: 'data',
-    components: _NumberEdit2.default
-  }, {
-    key: 'validation',
-    components: _NumberEdit3.default
-  }]].concat(extend));
+export default function(...extend) {
+  return textEditForm([
+    {
+      key: 'display',
+      components: NumberEditDisplay
+    },
+    {
+      key: 'data',
+      components: NumberEditData
+    },
+    {
+      key: 'validation',
+      components: NumberEditValidation
+    }
+  ], ...extend);
 }

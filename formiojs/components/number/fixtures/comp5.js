@@ -1,10 +1,4 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-var _default = {
+export default {
   'label': 'Number',
   'mask': false,
   'spellcheck': true,
@@ -22,4 +16,3 @@ var _default = {
   'input': true,
   'defaultValue': [null]
 };
-exports.default = _default;

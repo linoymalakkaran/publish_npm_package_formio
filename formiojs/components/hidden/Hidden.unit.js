@@ -1,15 +1,12 @@
-"use strict";
+import Harness from '../../../test/harness';
+import HiddenComponent from './Hidden';
 
-var _harness = _interopRequireDefault(require("../../../test/harness"));
+import {
+  comp1
+} from './fixtures';
 
-var _Hidden = _interopRequireDefault(require("./Hidden"));
-
-var _fixtures = require("./fixtures");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-describe('Hidden Component', function () {
-  it('Should build a hidden component', function () {
-    return _harness.default.testCreate(_Hidden.default, _fixtures.comp1);
+describe('Hidden Component', () => {
+  it('Should build a hidden component', () => {
+    return Harness.testCreate(HiddenComponent, comp1);
   });
 });

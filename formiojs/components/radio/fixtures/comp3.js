@@ -1,10 +1,4 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-var _default = {
+export default {
   'label': 'Number ST Radio',
   'labelPosition': 'top',
   'optionsLabelPosition': 'right',
@@ -92,4 +86,3 @@ var _default = {
   'id': 'er5lmse',
   'defaultValue': ''
 };
-exports.default = _default;
